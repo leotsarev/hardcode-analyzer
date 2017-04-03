@@ -7,7 +7,7 @@
     <authors>leotsarev</authors>
     <owners>leotsarev</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <projectUrl>https://github.com/leotsarev/hardcode-analyzer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Url hardcode analyzer</description>
     <releaseNotes>Initial version</releaseNotes>
