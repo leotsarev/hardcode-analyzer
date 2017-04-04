@@ -7,11 +7,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7EF60AD1-739B-4F59-A4C9-DF70BE016460}</ProjectGuid>
+    <ProjectGuid>{7EF60AD1-739B-4F59-A4C9-DF70BE016461}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VatHardcodeAnalyzer.Test</RootNamespace>
-    <AssemblyName>VatHardcodeAnalyzer.Test</AssemblyName>
+    <RootNamespace>Analyzer.TestHelpers</RootNamespace>
+    <AssemblyName>Analyzer.TestHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -104,17 +104,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTests.cs" />
+    <Compile Include="Verifiers\CodeFixVerifier.cs" />
+    <Compile Include="Verifiers\DiagnosticVerifier.cs" />
+    <Compile Include="Helpers\CodeFixVerifier.Helper.cs" />
+    <Compile Include="Helpers\DiagnosticResult.cs" />
+    <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Analyzer.TestHelpers\Analyzer.TestHelpers.csproj">
-      <Project>{7ef60ad1-739b-4f59-a4c9-df70be016461}</Project>
-      <Name>Analyzer.TestHelpers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UrlHardcodeAnalyzer\UrlHardcodeAnalyzer.csproj">
       <Project>{256757F2-DA1A-460B-B3B0-C412F7765C16}</Project>
       <Name>UrlHardcodeAnalyzer</Name>
