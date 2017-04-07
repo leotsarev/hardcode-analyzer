@@ -1,8 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestHelper;
 using UrlHardcodeAnalyzer;
 
@@ -21,12 +19,12 @@ namespace VatHardcodeAnalyzer.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    private DiagnosticResult ExpectUlrHardcode(int line, int column)
+    private DiagnosticResult ExpectUlrHardcode(int line, int column, string actualUrl)
     {
       return new DiagnosticResult
       {
         Id = "UrlHardcodeAnalyzer",
-        Message = string.Format("String '{0}' contains hardcoded URL", "http://"),
+        Message = string.Format("String '{0}' contains hardcoded URL", actualUrl),
         Severity = DiagnosticSeverity.Warning,
         Locations =
               new[] {
@@ -51,7 +49,7 @@ namespace VatHardcodeAnalyzer.Test
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(8,27));
+      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(8,27, "http://"));
     }
 
     [TestMethod]
@@ -127,6 +125,22 @@ namespace VatHardcodeAnalyzer.Test
     }";
 
       VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestInterpolationString()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""http://example.com"";
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(6, 25, "http://example.com"));
     }
 
 

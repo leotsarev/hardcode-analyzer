@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace UrlHardcodeAnalyzer
 {
@@ -28,6 +29,12 @@ namespace UrlHardcodeAnalyzer
       {
         return name;
       }
+    }
+
+    public static AttributeSyntax WalkToAttribute(this AttributeArgumentSyntax argument)
+    {
+      var argumentList = argument.Parent as AttributeArgumentListSyntax;
+      return (argumentList?.Parent as AttributeSyntax);
     }
   }
 }

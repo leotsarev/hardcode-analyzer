@@ -33,7 +33,8 @@ namespace UrlHardcodeAnalyzer
 
     public override void Initialize(AnalysisContext context)
     {
-      context.RegisterSyntaxNodeAction(AnalyzeSymbol, SyntaxKind.StringLiteralExpression);
+      context.RegisterSyntaxNodeAction(AnalyzeLiteral, SyntaxKind.StringLiteralExpression);
+      context.RegisterSyntaxNodeAction(AnalyzeInterpolation, SyntaxKind.InterpolatedStringText);
     }
 
     private readonly static string[] BlackList = new[] { "http:", "https:", "ftp:", "tcp:"};
@@ -49,23 +50,38 @@ namespace UrlHardcodeAnalyzer
         "SoapDocumentMethodAttribute"
       };
 
-    private static void AnalyzeSymbol(SyntaxNodeAnalysisContext context)
+    private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
     {
-
       var node = ((LiteralExpressionSyntax)context.Node);
 
-      var value = node.Token.ValueText;
-
-      //Try to check if we are part of Attribute argument list
-      var argument = node.Parent as AttributeArgumentSyntax;
-      var argumentList = argument?.Parent as AttributeArgumentListSyntax;
-      var attribute = (argumentList?.Parent as AttributeSyntax);
-
-      if (AttributeNameWhiteList.Contains(attribute?.GetAttributeName()))
+      if (IsArgumentOfWhiteListedAttribute(node))
       {
         return;
       }
 
+      CheckStringValue(context, node.Token.ValueText);
+    }
+    private static void AnalyzeInterpolation(SyntaxNodeAnalysisContext context)
+    {
+      var node = ((InterpolatedStringTextSyntax)context.Node);
+
+      if (IsArgumentOfWhiteListedAttribute(node))
+      {
+        return;
+      }
+
+      CheckStringValue(context, node.TextToken.ValueText);
+    }
+
+    private static bool IsArgumentOfWhiteListedAttribute(SyntaxNode node)
+    {
+      var argument = node.Parent as AttributeArgumentSyntax;
+      var attribute = argument?.WalkToAttribute();
+      return attribute != null && AttributeNameWhiteList.Contains(attribute.GetAttributeName());
+    }
+
+    private static void CheckStringValue(SyntaxNodeAnalysisContext context, string value)
+    {
       if (BlackList.Any(part => value.Contains(part)))
       {
         context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
