@@ -121,7 +121,7 @@ namespace Tsarev.Analyzer.Web
 
       var arguments = invokeExpression.ArgumentList.Arguments;
 
-      return isViewCall && (arguments.Any(argument => IsWebTrivialExpression(argument.Expression)));
+      return isViewCall && (arguments.All(argument => IsWebTrivialExpression(argument.Expression)));
     }
 
     
