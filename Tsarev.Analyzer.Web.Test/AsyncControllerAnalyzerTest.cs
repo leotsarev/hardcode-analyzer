@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestHelper;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis;
+using Tsarev.Analyzer.TestHelpers;
 
 namespace Tsarev.Analyzer.Web.Test
 {

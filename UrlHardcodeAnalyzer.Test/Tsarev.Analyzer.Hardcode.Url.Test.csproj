@@ -10,8 +10,8 @@
     <ProjectGuid>{7EF60AD1-739B-4F59-A4C9-DF70BE016460}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VatHardcodeAnalyzer.Test</RootNamespace>
-    <AssemblyName>VatHardcodeAnalyzer.Test</AssemblyName>
+    <RootNamespace>Tsarev.Analyzer.Hardcode.Url.Test</RootNamespace>
+    <AssemblyName>Tsarev.Analyzer.Hardcode.Url.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

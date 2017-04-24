@@ -118,7 +118,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj">
       <Project>{c408d80b-8a40-4b31-b894-941039eb12d0}</Project>
-      <Name>Tsarev.AnalyzerHelpers</Name>
+      <Name>Tsarev.Analyzer.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

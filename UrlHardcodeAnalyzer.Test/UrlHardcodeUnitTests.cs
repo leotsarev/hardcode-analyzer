@@ -1,10 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestHelper;
-using Tsarev.Analyzer.Hardcode.Url;
+using Tsarev.Analyzer.TestHelpers;
 
-namespace VatHardcodeAnalyzer.Test
+namespace Tsarev.Analyzer.Hardcode.Url.Test
 {
   [TestClass]
   public class UnitTest : CodeFixVerifier
