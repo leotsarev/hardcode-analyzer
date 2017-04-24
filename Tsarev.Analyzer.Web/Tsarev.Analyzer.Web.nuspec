@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>XXTsarev.Analyzer.Web</id>
+    <id>Tsarev.Analyzer.Web</id>
     <version>$version$</version>
-    <title>XXTsarev.Analyzer.Web</title>
+    <title>Tsarev.Analyzer.Web</title>
     <authors>leotsarev</authors>
     <owners>leotsarev</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
