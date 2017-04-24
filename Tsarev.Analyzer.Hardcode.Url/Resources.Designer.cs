@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Tsarev.Analyzer.Hardcode.Url
-{
+namespace Tsarev.Analyzer.Hardcode.Url {
     using System;
     using System.Reflection;
     
@@ -41,7 +40,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UrlHardcodeAnalyzer.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tsarev.Analyzer.Hardcode.Url.Resources", typeof(Resources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -16,7 +16,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
 
-    private static DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+    private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
       nameof(UrlHardcodeAnalyzer), 
       Title, 
       MessageFormat, 
