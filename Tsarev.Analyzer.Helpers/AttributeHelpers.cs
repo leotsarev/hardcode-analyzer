@@ -1,9 +1,12 @@
 ﻿using System;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace UrlHardcodeAnalyzer
+namespace Tsarev.Analyzer.Helpers
 {
-  internal static class SyntaxHelpers
+  /// <summary>
+  /// Helpers that help works with attributes
+  /// </summary>
+  public static class AttributeHelpers
   {
     /// <summary>
     /// Gets name 
@@ -31,6 +34,9 @@ namespace UrlHardcodeAnalyzer
       }
     }
 
+    /// <summary>
+    /// Walks upwards to attribute from argument
+    /// </summary>
     public static AttributeSyntax WalkToAttribute(this AttributeArgumentSyntax argument)
     {
       var argumentList = argument.Parent as AttributeArgumentListSyntax;

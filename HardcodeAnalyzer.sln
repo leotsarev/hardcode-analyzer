@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlHardcodeAnalyzer", "UrlHardcodeAnalyzer\UrlHardcodeAnalyzer\UrlHardcodeAnalyzer.csproj", "{256757F2-DA1A-460B-B3B0-C412F7765C16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Url", "Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj", "{256757F2-DA1A-460B-B3B0-C412F7765C16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlHardcodeAnalyzer.Test", "UrlHardcodeAnalyzer\UrlHardcodeAnalyzer.Test\UrlHardcodeAnalyzer.Test.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016460}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlHardcodeAnalyzer.Test", "UrlHardcodeAnalyzer.Test\UrlHardcodeAnalyzer.Test.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Analyzer.TestHelpers", "UrlHardcodeAnalyzer\Analyzer.TestHelpers\Analyzer.TestHelpers.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016461}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.TestHelpers", "Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016461}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Web", "Tsarev.Analyzer.Web\Tsarev.Analyzer.Web.csproj", "{14D5C137-73AD-4848-9C94-20340EAB466B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.AnalyzerHelpers", "Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj", "{C408D80B-8A40-4B31-B894-941039EB12D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Web.Test", "Tsarev.Analyzer.Web.Test\Tsarev.Analyzer.Web.Test.csproj", "{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{7EF60AD1-739B-4F59-A4C9-DF70BE016461}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EF60AD1-739B-4F59-A4C9-DF70BE016461}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EF60AD1-739B-4F59-A4C9-DF70BE016461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14D5C137-73AD-4848-9C94-20340EAB466B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14D5C137-73AD-4848-9C94-20340EAB466B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14D5C137-73AD-4848-9C94-20340EAB466B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14D5C137-73AD-4848-9C94-20340EAB466B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C408D80B-8A40-4B31-B894-941039EB12D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C408D80B-8A40-4B31-B894-941039EB12D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C408D80B-8A40-4B31-B894-941039EB12D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C408D80B-8A40-4B31-B894-941039EB12D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>Tsarev.Hardcode.Url</id>
+    <id>Tsarev.Analyzer.Web</id>
     <version>0.1.0.0</version>
-    <title>Tsarev.Hardcode.Url</title>
+    <title>Tsarev.Analyzer.Web</title>
     <authors>leotsarev</authors>
     <owners>leotsarev</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/leotsarev/hardcode-analyzer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Url hardcode analyzer</description>
+    <description>Requires that all methods of contollers should return Task&lt;T&gt;</description>
     <releaseNotes>Initial version</releaseNotes>
     <copyright>© 2017, Leonid Tsarev</copyright>
-    <tags>Hardcode, analyzers, urls</tags>
+    <tags>analyzers, urls, asp.net mvc, asp.net webapi</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
     </frameworkAssemblies>

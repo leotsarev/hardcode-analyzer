@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UrlHardcodeAnalyzer {
+namespace Tsarev.Analyzer.Web {
     using System;
     using System.Reflection;
     
@@ -40,7 +40,7 @@ namespace UrlHardcodeAnalyzer {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UrlHardcodeAnalyzer.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tsarev.Analyzer.Web.Resources", typeof(Resources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,7 +62,7 @@ namespace UrlHardcodeAnalyzer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URLs should be configured via .config or other method to store configuration.
+        ///   Looks up a localized string similar to All methods of controller, except trivial, should be asynchronous and return Task&lt;ActionResult&gt;. If your method is trivial and marked by diagnostic, please open a bug..
         /// </summary>
         internal static string AnalyzerDescription {
             get {
@@ -71,7 +71,7 @@ namespace UrlHardcodeAnalyzer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to String &apos;{0}&apos; contains hardcoded URL.
+        ///   Looks up a localized string similar to Controller &apos;{0}&apos; contains method &apos;{1}&apos; that executes synchronously. Consider converting to method that returns Task&lt;T&gt;.
         /// </summary>
         internal static string AnalyzerMessageFormat {
             get {
@@ -80,7 +80,7 @@ namespace UrlHardcodeAnalyzer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to String contains hardcoded URL.
+        ///   Looks up a localized string similar to Controller contains synchronous method.
         /// </summary>
         internal static string AnalyzerTitle {
             get {

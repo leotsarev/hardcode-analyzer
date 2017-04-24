@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
-using UrlHardcodeAnalyzer;
+using Tsarev.Analyzer.Hardcode.Url;
 
 namespace VatHardcodeAnalyzer.Test
 {
@@ -50,6 +50,25 @@ namespace VatHardcodeAnalyzer.Test
     }";
 
       VerifyCSharpDiagnostic(test, ExpectUlrHardcode(8,27, "http://"));
+    }
+
+    //Diagnostic triggered and checked for
+    [TestMethod]
+    public void TestExpectedHardcodeWithCapitalLetter()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               var test = ""hTTp://"";
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(8, 27, "hTTp://"));
     }
 
     [TestMethod]
@@ -146,7 +165,7 @@ namespace VatHardcodeAnalyzer.Test
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
     {
-      return new UrlHardcodeAnalyzerAnalyzer();
+      return new UrlHardcodeAnalyzer();
     }
   }
 }

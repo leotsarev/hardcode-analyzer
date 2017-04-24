@@ -4,25 +4,23 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Linq;
+using System.Globalization;
+using Tsarev.Analyzer.Helpers;
 
-namespace UrlHardcodeAnalyzer
+namespace Tsarev.Analyzer.Hardcode.Url
 {
   [DiagnosticAnalyzer(LanguageNames.CSharp)]
-  public class UrlHardcodeAnalyzerAnalyzer : DiagnosticAnalyzer
+  public class UrlHardcodeAnalyzer : DiagnosticAnalyzer
   {
-    public const string DiagnosticId = "UrlHardcodeAnalyzer";
-
-   
     private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
-    private const string Category = "Naming";
 
     private static DiagnosticDescriptor Rule = new DiagnosticDescriptor(
-      DiagnosticId, 
+      nameof(UrlHardcodeAnalyzer), 
       Title, 
       MessageFormat, 
-      Category, 
+      "Hardcode", 
       DiagnosticSeverity.Warning, 
       isEnabledByDefault: true, 
       description: Description);
@@ -47,7 +45,9 @@ namespace UrlHardcodeAnalyzer
         "WebServiceBindingAttribute",
         "DefaultSettingValueAttribute",
         "XmlTypeAttribute",
-        "SoapDocumentMethodAttribute"
+        "SoapDocumentMethodAttribute",
+        "SoapRpcMethodAttribute",
+        "SoapTypeAttribute",
       };
 
     private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
@@ -82,7 +82,8 @@ namespace UrlHardcodeAnalyzer
 
     private static void CheckStringValue(SyntaxNodeAnalysisContext context, string value)
     {
-      if (BlackList.Any(part => value.Contains(part)))
+      var comparer = CultureInfo.InvariantCulture.CompareInfo;
+      if (BlackList.Any(part => comparer.IndexOf(value, part, CompareOptions.IgnoreCase) >= 0))
       {
         context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
       }
