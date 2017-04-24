@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Tsarev.Analyzer.Web</id>
-    <version>0.1.0.0</version>
+    <version>$version$</version>
     <title>Tsarev.Analyzer.Web</title>
     <authors>leotsarev</authors>
     <owners>leotsarev</owners>
