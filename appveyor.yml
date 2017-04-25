@@ -1,0 +1,22 @@
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+before_build:
+- ps: nuget restore
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  parallel: true
+  verbosity: minimal
+deploy:
+- provider: Environment
+  name: Tsarev Analyzer NuGet
+  on:
+    appveyor_repo_tag: true
