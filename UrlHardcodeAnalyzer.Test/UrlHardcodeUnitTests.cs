@@ -146,6 +146,20 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     }
 
     [TestMethod]
+    public void TestXmlArrayItemAttribute()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      public void Foo([System.Xml.Serialization.XmlArrayItemAttribute(Namespace = ""http://tempuri.org/Order"")] int[] x) 
+      {
+      }
+  }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestInterpolationString()
     {
       var test = @"

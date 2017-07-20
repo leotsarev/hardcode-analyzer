@@ -48,6 +48,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
         "SoapDocumentMethodAttribute",
         "SoapRpcMethodAttribute",
         "SoapTypeAttribute",
+        "XmlArrayItemAttribute"
       };
 
     private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
