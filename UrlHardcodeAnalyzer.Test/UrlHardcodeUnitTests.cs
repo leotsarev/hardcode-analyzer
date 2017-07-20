@@ -146,6 +146,19 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     }
 
     [TestMethod]
+    public void TestSoapTypeAttributee()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        [System.Xml.Serialization.SoapTypeAttribute(Namespace=""https://www.m2m.mts.ru/soap/m2m"")]
+        class TypeName {  }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestXmlArrayItemAttribute()
     {
       var test = @"
