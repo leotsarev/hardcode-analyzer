@@ -17,3 +17,6 @@ before_build:
 build:
   parallel: true
   verbosity: minimal
+artifacts:
+- path: '**\Tsarev*.nupkg'
+  name: Tsarev Analyzer NuGet
