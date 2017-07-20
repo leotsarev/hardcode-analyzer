@@ -117,7 +117,8 @@ namespace Tsarev.Analyzer.Web
 
       if (invokeExpression == null) return false;
 
-      var isViewCall = (invokeExpression.Expression as SimpleNameSyntax)?.Identifier.Text == "View";
+      var methodName = (invokeExpression.Expression as SimpleNameSyntax)?.Identifier.Text;
+      var isViewCall = methodName == "View" || methodName == "PartialView";
 
       var arguments = invokeExpression.ArgumentList.Arguments;
 

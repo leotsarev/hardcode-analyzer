@@ -167,7 +167,7 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
     [TestMethod]
-    public void TestControllerTrivialCorrect()
+    public void TestControllerTrivialViewCorrect()
     {
       var test = @"
     namespace ConsoleApplication1
@@ -183,6 +183,25 @@ namespace Tsarev.Analyzer.Web.Test
 
       VerifyCSharpDiagnostic(test);
     }
+
+    [TestMethod]
+    public void TestControllerTrivialPatialViewCorrect()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      class UpperClass {
+          class FooController {
+          public ActionResult Method() {
+             return PartialView(""Test"", 4);
+          }
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
 
     [TestMethod]
     public void TestControllerInInterface()
