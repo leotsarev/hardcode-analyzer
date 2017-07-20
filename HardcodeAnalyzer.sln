@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Url", "Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj", "{256757F2-DA1A-460B-B3B0-C412F7765C16}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Helpers", "Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj", "{C408D80B-8A40-4B31-B894-941039EB12D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Web.Test", "Tsarev.Analyzer.Web.Test\Tsarev.Analyzer.Web.Test.csproj", "{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{456FDA75-295D-4446-8A26-55066E46B24A}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

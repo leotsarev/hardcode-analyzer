@@ -1,22 +1,19 @@
-version: 1.0.{build}
+version: 1.1.{build}
 pull_requests:
   do_not_increment_build_number: true
+image: Visual Studio 2017
 configuration: Release
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+nuget:
+  project_feed: true
+  disable_publish_on_pr: true
 before_build:
 - ps: nuget restore
 build:
-  publish_nuget: true
-  publish_nuget_symbols: true
-  include_nuget_references: true
   parallel: true
   verbosity: minimal
-deploy:
-- provider: Environment
-  name: Tsarev Analyzer NuGet
-  on:
-    appveyor_repo_tag: true

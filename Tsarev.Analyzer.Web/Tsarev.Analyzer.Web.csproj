@@ -125,12 +125,18 @@
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <!-- ILRepack -->
     <ItemGroup>
-      <InputAssemblies Include="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
       <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
+      <InputAssemblies Include="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
     </ItemGroup>
     <ILRepack Parallel="true" Internalize="False" InputAssemblies="@(InputAssemblies)" TargetKind="Dll" OutputFile="$(OutputPath)\$(AssemblyName).dll" />
     <Delete Files="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
     <!-- /ILRepack -->
+    <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">
+      <Output TaskParameter="Assemblies" ItemName="AnalyzerAssemblyInfo" />
+    </GetAssemblyIdentity>
+    <Exec Command="&quot;$(SolutionDir)packages\NuGet.CommandLine.2.8.5\tools\NuGet.exe&quot; pack Tsarev.Analyzer.Web.nuspec -NoPackageAnalysis -Version %(AnalyzerAssemblyInfo.Version) -OutputDirectory ." WorkingDirectory="$(OutDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+    </Exec>
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
