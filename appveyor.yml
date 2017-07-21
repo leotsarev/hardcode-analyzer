@@ -18,5 +18,11 @@ build:
   parallel: true
   verbosity: minimal
 artifacts:
-- path: '**\Tsarev*.nupkg'
+- path: '**\*.nupkg'
   name: Tsarev Analyzer NuGet
+deploy:
+- provider: NuGet
+  api_key:
+    secure: xWsf2rExtqDyT/CWQObnkecDiF7yTSty8Gp8HzRi11erJuXJ8KpdQ7gV7X0rTpD5
+  on:
+    branch: master
