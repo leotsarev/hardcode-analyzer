@@ -19,7 +19,7 @@ namespace Tsarev.Analyzer.Web
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
 
-    private static DiagnosticDescriptor Rule = new DiagnosticDescriptor(
+    private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
       DiagnosticId, 
       Title, 
       MessageFormat, 
@@ -28,9 +28,7 @@ namespace Tsarev.Analyzer.Web
       isEnabledByDefault: true, 
       description: Description);
 
-    private readonly ImmutableArray<DiagnosticDescriptor> _supportedDiagnostics = ImmutableArray.Create(Rule, StandartRules.FailedRule);
-
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => _supportedDiagnostics;
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule, StandartRules.FailedRule);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -39,7 +37,7 @@ namespace Tsarev.Analyzer.Web
 
     private void AnalyzeMethod(SyntaxNodeAnalysisContext context)
     {
-      var node = ((MethodDeclarationSyntax)context.Node);
+      var node = (MethodDeclarationSyntax)context.Node;
 
       try
       {
@@ -53,7 +51,7 @@ namespace Tsarev.Analyzer.Web
         if (
           classNode != null
           && classNode.GetClassNamesToTop(context).Any(type => IsClassNameSignifiesController(type.Name))
-          && !IsTrivialMethod(node, context)
+          && !IsTrivialMethod(node)
           && node.IsPublic()
           && !node.ReturnType.IsTask(context)
           )
@@ -69,7 +67,7 @@ namespace Tsarev.Analyzer.Web
 
     private bool IsClassNameSignifiesController(string className) => className.ToLowerInvariant().Contains("controller");
 
-    private bool IsTrivialMethod(MethodDeclarationSyntax methodNode, SyntaxNodeAnalysisContext context)
+    private bool IsTrivialMethod(MethodDeclarationSyntax methodNode)
     {
       if (methodNode.ExpressionBody != null)
       {
@@ -78,16 +76,14 @@ namespace Tsarev.Analyzer.Web
 
       foreach (var statement in methodNode.Body.Statements)
       {
-        var returnStatement = statement as ReturnStatementSyntax;
-        if (returnStatement != null && IsWebTrivialExpression(returnStatement.Expression))
+        if (statement is ReturnStatementSyntax returnStatement && IsWebTrivialExpression(returnStatement.Expression))
         {
           return true;
         }
 
-        var assigmentStatement = statement as ExpressionStatementSyntax;
-        if (assigmentStatement != null && IsWebTrivialExpression(assigmentStatement.Expression))
+        if (statement is ExpressionStatementSyntax assigmentStatement && IsWebTrivialExpression(assigmentStatement.Expression))
         {
-          return true;
+          continue;
         }
 
         return false;
@@ -96,22 +92,26 @@ namespace Tsarev.Analyzer.Web
       return true;
     }
 
-    private bool IsWebTrivialExpression(ExpressionSyntax syntax)
+    private static bool IsWebTrivialExpression(ExpressionSyntax syntax)
     {
-      var assigment = syntax as AssignmentExpressionSyntax;
-      if (assigment != null)
+      if (syntax is AssignmentExpressionSyntax assigment)
       {
         return IsWebTrivialExpression(assigment.Left) && IsWebTrivialExpression(assigment.Right);
       }
-      var memberAccess = syntax as MemberAccessExpressionSyntax;
-      if (memberAccess != null && (memberAccess.Expression as IdentifierNameSyntax).Identifier.ToString() == "ViewBag")
+
+      if (syntax is ArrayCreationExpressionSyntax array)
+      {
+        return array.Initializer.IsConstant();
+      }
+
+      if (syntax is MemberAccessExpressionSyntax memberAccess && (memberAccess.Expression as IdentifierNameSyntax)?.Identifier.ToString() == "ViewBag")
       {
         return true;
       }
       return syntax.IsConstant() || IsConstViewInvoke(syntax);
     }
 
-    private bool IsConstViewInvoke(ExpressionSyntax syntax)
+    private static bool IsConstViewInvoke(ExpressionSyntax syntax)
     {
       var invokeExpression = syntax as InvocationExpressionSyntax;
 

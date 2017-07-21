@@ -290,6 +290,26 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
     [TestMethod]
+    public void TestNonTrivialWithViewBagAssigmentAndCall()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      class UpperClass {
+          class FooController {
+          public ActionResult Method() {
+             ViewBag.Title = ""something"";
+             LoadEntireWorld();
+             return View(""ViewName"");
+          }
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 31, "FooController", "Method"));
+    }
+
+    [TestMethod]
     public void TestControllerTrivialArrowCorrect()
     {
       var test = @"
@@ -315,6 +335,25 @@ namespace Tsarev.Analyzer.Web.Test
           class FooController {
           public ActionResult Method() => View(""ViewName"");
         }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestControllerTrivialArrayCorrect()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      class UpperClass {
+          class FooController {
+        public IEnumerable<int> Get()
+        {
+            return new int[] { 1, 2,};
+    }
+  }
       }
     }";
 

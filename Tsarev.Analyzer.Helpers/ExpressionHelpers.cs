@@ -19,6 +19,10 @@ namespace Tsarev.Analyzer.Helpers
     /// </summary>
     public static bool IsConstant (this ExpressionSyntax syntax)
     {
+      if (syntax is InitializerExpressionSyntax initializer)
+      {
+        return initializer.Expressions.All(expression => expression.IsConstant());
+      }
       return syntax.IsKind(SyntaxKind.CharacterLiteralExpression, SyntaxKind.TrueLiteralExpression, SyntaxKind.FalseLiteralExpression, SyntaxKind.NumericLiteralExpression, SyntaxKind.StringLiteralExpression);
     }
 
