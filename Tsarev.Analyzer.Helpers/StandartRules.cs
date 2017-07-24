@@ -29,6 +29,6 @@ namespace Tsarev.Analyzer.Helpers
     /// Throw unexpected exception happened during method analyze
     /// </summary>
     public static Diagnostic CreateFailedToAnalyze(MethodDeclarationSyntax node, Exception exception)
-      => Diagnostic.Create(FailedRule, node.Identifier.GetLocation(), exception, node.Identifier.ToString());
+      => Diagnostic.Create(FailedRule, node.Identifier.GetLocation(), exception.ToString(), node.Identifier.ToString());
   }
 }

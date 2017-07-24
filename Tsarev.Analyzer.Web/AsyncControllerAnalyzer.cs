@@ -12,15 +12,12 @@ namespace Tsarev.Analyzer.Web
   [DiagnosticAnalyzer(LanguageNames.CSharp)]
   public class AsyncControllerAnalyzer : DiagnosticAnalyzer
   {
-    public const string DiagnosticId = nameof(AsyncControllerAnalyzer);
-
-   
     private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
 
     private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
-      DiagnosticId, 
+      nameof(AsyncControllerAnalyzer), 
       Title, 
       MessageFormat, 
       "WebPerfomance", 
@@ -74,6 +71,16 @@ namespace Tsarev.Analyzer.Web
         return IsWebTrivialExpression(methodNode.ExpressionBody.Expression);
       }
 
+      if (methodNode.Body != null)
+      {
+        return IsWebTrivialBody(methodNode);
+      }
+
+      return true;
+    }
+
+    private static bool IsWebTrivialBody(MethodDeclarationSyntax methodNode)
+    {
       foreach (var statement in methodNode.Body.Statements)
       {
         if (statement is ReturnStatementSyntax returnStatement && IsWebTrivialExpression(returnStatement.Expression))
@@ -81,7 +88,8 @@ namespace Tsarev.Analyzer.Web
           return true;
         }
 
-        if (statement is ExpressionStatementSyntax assigmentStatement && IsWebTrivialExpression(assigmentStatement.Expression))
+        if (statement is ExpressionStatementSyntax assigmentStatement &&
+            IsWebTrivialExpression(assigmentStatement.Expression))
         {
           continue;
         }

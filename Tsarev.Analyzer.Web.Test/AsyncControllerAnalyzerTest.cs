@@ -310,6 +310,40 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
     [TestMethod]
+    public void TestIgnoreAbstractMethod()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      class UpperClass {
+          class FooController {
+          public abstract ActionResult Method();
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestIgnorePrivateMethod()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      class UpperClass {
+          class FooController {
+          private string GetUserName()
+          {
+              return User.Identity.Name;
+          }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestControllerTrivialArrowCorrect()
     {
       var test = @"
