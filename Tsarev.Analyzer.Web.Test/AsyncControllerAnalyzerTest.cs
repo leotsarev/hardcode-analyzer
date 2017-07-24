@@ -344,6 +344,21 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
     [TestMethod]
+    public void TestAnalyzeGenericClass()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+       public abstract class SomeController<TViewModel> : Controller where TViewModel : class
+    {
+        public abstract ActionResult Index();
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestControllerTrivialArrowCorrect()
     {
       var test = @"
