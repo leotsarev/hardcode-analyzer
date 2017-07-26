@@ -21,14 +21,37 @@ namespace Tsarev.Analyzer.Helpers
     }
 
     /// <summary>
+    /// Return all containing class (not including self)
+    /// </summary>
+    public static IEnumerable<ClassDeclarationSyntax> GetAllContainingClasses(this SyntaxNode node)
+    {
+      return node.Ancestors().OfType<ClassDeclarationSyntax>();
+    }
+
+    /// <summary>
     /// All class symbols from here to top
     /// </summary>
-    public static IEnumerable<INamedTypeSymbol> GetClassNamesToTop(this ClassDeclarationSyntax classNode, SyntaxNodeAnalysisContext context)
+    public static IEnumerable<INamedTypeSymbol> GetClassNamesToTop(this ClassDeclarationSyntax classNode,
+      SyntaxNodeAnalysisContext context)
     {
       for (var type = context.SemanticModel.GetDeclaredSymbol(classNode); type != null; type = type.BaseType)
       {
         yield return type;
       }
+
+    }
+
+    /// <summary>
+    /// Class has something that resembles primary key 
+    /// </summary>
+    public static bool HasLikelyPrimaryKey(this ClassDeclarationSyntax cl)
+    {
+      return cl.Members.OfType<PropertyDeclarationSyntax>()
+        .Any(m =>
+        {
+          var identifier = m.Identifier.Text.ToLowerInvariant();
+          return identifier.EndsWith("id") || identifier.EndsWith("key");
+        });
     }
   }
 }

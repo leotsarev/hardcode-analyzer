@@ -25,5 +25,22 @@ namespace Tsarev.Analyzer.Helpers
         return true;
       return false;
     }
+
+    /// <summary>
+    /// Determines if some expression is actually of type T
+    /// </summary>
+    public static bool IsExpressionOfType<T>(this ExpressionSyntax createNode, SyntaxNodeAnalysisContext context)
+    {
+      var type = context.SemanticModel.GetTypeInfo(createNode).Type as INamedTypeSymbol;
+      return Equals(type, GetType<T>(context));
+    }
+
+    /// <summary>
+    /// Gets matching type in context
+    /// </summary>
+    public static INamedTypeSymbol GetType<T>(this SyntaxNodeAnalysisContext context)
+    {
+      return context.SemanticModel.Compilation.GetTypeByMetadataName(typeof(T).FullName);
+    }
   }
 }
