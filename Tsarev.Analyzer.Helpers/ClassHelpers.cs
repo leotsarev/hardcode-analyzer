@@ -15,18 +15,14 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Return nearest containing class (not including self)
     /// </summary>
-    public static ClassDeclarationSyntax GetContainingClass(this SyntaxNode node)
-    {
-      return node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault();
-    }
+    public static ClassDeclarationSyntax GetContainingClass(this SyntaxNode node) 
+      => node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault();
 
     /// <summary>
     /// Return all containing class (not including self)
     /// </summary>
     public static IEnumerable<ClassDeclarationSyntax> GetAllContainingClasses(this SyntaxNode node)
-    {
-      return node.Ancestors().OfType<ClassDeclarationSyntax>();
-    }
+      => node.Ancestors().OfType<ClassDeclarationSyntax>();
 
     /// <summary>
     /// All class symbols from here to top
@@ -44,14 +40,12 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Class has something that resembles primary key 
     /// </summary>
-    public static bool HasLikelyPrimaryKey(this ClassDeclarationSyntax cl)
-    {
-      return cl.Members.OfType<PropertyDeclarationSyntax>()
-        .Any(m =>
-        {
-          var identifier = m.Identifier.Text.ToLowerInvariant();
-          return identifier.EndsWith("id") || identifier.EndsWith("key");
-        });
-    }
+    public static bool HasLikelyPrimaryKey(this ClassDeclarationSyntax cl) 
+      => cl.Members.OfType<PropertyDeclarationSyntax>()
+      .Any(m =>
+      {
+        var identifier = m.Identifier.Text.ToLowerInvariant();
+        return identifier.EndsWith("id") || identifier.EndsWith("key");
+      });
   }
 }

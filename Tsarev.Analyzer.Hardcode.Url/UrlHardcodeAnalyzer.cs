@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -35,13 +35,13 @@ namespace Tsarev.Analyzer.Hardcode.Url
       context.RegisterSyntaxNodeAction(AnalyzeInterpolation, SyntaxKind.InterpolatedStringText);
     }
 
-    private readonly static string[] BlackList = new[] { "http:", "https:", "ftp:", "tcp:"};
+    private static readonly string[] BlackList = { "http:", "https:", "ftp:", "tcp:"};
 
     /// <summary>
     /// List of attributes that expected to contain URLs, and this is correct.
     /// </summary>
-    private readonly static string[] AttributeNameWhiteList 
-      = new[] {
+    private static readonly string[] AttributeNameWhiteList 
+      = {
         "WebServiceBindingAttribute",
         "DefaultSettingValueAttribute",
         "XmlTypeAttribute",

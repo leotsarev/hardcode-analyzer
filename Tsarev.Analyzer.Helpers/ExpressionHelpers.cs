@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Tsarev.Analyzer.Helpers
 {
@@ -29,9 +30,15 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Is some node is one kind or another
     /// </summary>
-    public static bool IsKind(this SyntaxNode node, params SyntaxKind[] kinds)
+    public static bool IsKind(this SyntaxNode node, params SyntaxKind[] kinds) => node != null && kinds.Contains(node.Kind());
+
+    /// <summary>
+    /// Get int constant value from constant
+    /// </summary>
+    public static int? GetIntOrDefault(this LiteralExpressionSyntax contextNode, SyntaxNodeAnalysisContext context)
     {
-      return node != null && kinds.Contains(node.Kind());
+      var constant = context.SemanticModel.GetConstantValue(contextNode);
+      return constant.HasValue ? (int?) (int) constant.Value : null;
     }
   }
 }

@@ -23,7 +23,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       return new DiagnosticResult
       {
         Id = "UrlHardcodeAnalyzer",
-        Message = string.Format("String '{0}' contains hardcoded URL", actualUrl),
+        Message = $"String '{actualUrl}' contains hardcoded URL",
         Severity = DiagnosticSeverity.Warning,
         Locations =
               new[] {
