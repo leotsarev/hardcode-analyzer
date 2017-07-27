@@ -55,7 +55,7 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
     }
 
     [TestMethod]
-    public void TestDetect72InCode()
+    public void TestDetect82InCode()
     {
       var test = @"
     using System;
@@ -65,16 +65,16 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
         {   
            public void Test()
             {
-               var test = 72;
+               var test = 82;
             }
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, 72));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, 82));
     }
 
     [TestMethod]
-    public void TestDetect72InConst()
+    public void TestDetect82InConst()
     {
       var test = @"
     using System;
@@ -82,11 +82,11 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
     {
         class TypeName
         {   
-           public const int test = 72;
+           public const int test = 82;
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, 72));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, 82));
     }
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new VatHardcodeAnalyzer();
