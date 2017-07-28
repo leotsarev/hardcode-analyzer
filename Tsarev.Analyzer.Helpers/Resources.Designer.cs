@@ -62,8 +62,7 @@ namespace Tsarev.Analyzer.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please open issue at https://github.com/leotsarev/hardcode-analyzer with method code.
-        ///Exception: {0}.
+        ///   Looks up a localized string similar to Please open issue at https://github.com/leotsarev/hardcode-analyzer with method code..
         /// </summary>
         internal static string FailedAnalyzerDescription {
             get {
@@ -72,7 +71,7 @@ namespace Tsarev.Analyzer.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to analyze method &apos;{1}&apos;. That probably means some error in analyzer..
+        ///   Looks up a localized string similar to Analyzer failed to analyze some code fragment. That probably means some error in analyzer. Exception {0}.
         /// </summary>
         internal static string FailedAnalyzerMessageFormat {
             get {
@@ -81,7 +80,7 @@ namespace Tsarev.Analyzer.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to analyze method.
+        ///   Looks up a localized string similar to Failed to analyze.
         /// </summary>
         internal static string FailedAnalyzerTitle {
             get {

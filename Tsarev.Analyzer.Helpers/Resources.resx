@@ -118,16 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FailedAnalyzerDescription" xml:space="preserve">
-    <value>Please open issue at https://github.com/leotsarev/hardcode-analyzer with method code.
-Exception: {0}</value>
+    <value>Please open issue at https://github.com/leotsarev/hardcode-analyzer with method code.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
   <data name="FailedAnalyzerMessageFormat" xml:space="preserve">
-    <value>Failed to analyze method '{1}'. That probably means some error in analyzer.</value>
+    <value>Analyzer failed to analyze some code fragment. That probably means some error in analyzer. Exception {0}</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
   <data name="FailedAnalyzerTitle" xml:space="preserve">
-    <value>Failed to analyze method</value>
+    <value>Failed to analyze</value>
     <comment>The title of the diagnostic.</comment>
   </data>
 </root>

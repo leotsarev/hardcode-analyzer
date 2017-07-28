@@ -170,6 +170,51 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test);
     }
 
+    [TestMethod]
+    public void TestIgnoredVariable()
+    {
+      var test = @"
+       using System;
+       public class FooClass
+             internal static Guid SendMessage(string url, string phoneNumber, string text)
+        {
+                string smsServiceId = GetSomeString();
+                Guid result;
+                if (!Guid.TryParse(smsServiceId, out result))
+                    result = Guid.Empty;
+                return result;
+        }
+       }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestIgnoreConfigLoad()
+    {
+      var test = @"
+          
+          using System;
+          public static Guid Field => Guid.Parse(ConfigurationManager.AppSettings.Get(""ConfigVariableName""));";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestRobustForConstructorWithoutArguments()
+    {
+      var test = @"
+     using System;
+     using System.Collections.Generic;
+     public class FooClass {
+        private IEnumerable<TransportInfo> GetTransports()
+        {
+            var list = new List<int> { 1 };
+        }
+      }
+      ";
+      VerifyCSharpDiagnostic(test);
+    }
 
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new GuidHardcodeAnalyzer();

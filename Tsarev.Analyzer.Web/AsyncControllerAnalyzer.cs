@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Tsarev.Analyzer.Helpers;
 using System.Linq;
-using System;
 
 namespace Tsarev.Analyzer.Web
 {
@@ -27,35 +26,29 @@ namespace Tsarev.Analyzer.Web
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule, StandartRules.FailedRule);
 
-    public override void Initialize(AnalysisContext context) => context.RegisterSyntaxNodeAction(AnalyzeMethod, SyntaxKind.MethodDeclaration);
+    public override void Initialize(AnalysisContext context) => context.RegisterSafeSyntaxNodeAction(AnalyzeMethod, SyntaxKind.MethodDeclaration);
 
     private void AnalyzeMethod(SyntaxNodeAnalysisContext context)
     {
-      var node = (MethodDeclarationSyntax)context.Node;
-
-      try
+      var node = (MethodDeclarationSyntax) context.Node;
+      if (node.Identifier.Text == "Dispose")
       {
-        if (node.Identifier.Text == "Dispose")
-        {
-          return;
-        }
-
-        var classNode = node.GetContainingClass();
-
-        if (
-          classNode != null
-          && classNode.GetClassNamesToTop(context).Any(type => IsClassNameSignifiesController(type.Name))
-          && !IsTrivialMethod(node)
-          && node.IsPublic()
-          && !node.ReturnType.IsTask(context)
-          )
-        {
-          context.ReportDiagnostic(Diagnostic.Create(Rule, node.Identifier.GetLocation(), classNode.Identifier.ToString(), node.Identifier.ToString()));
-        }
+        return;
       }
-      catch (Exception exception)
+
+      var classNode = node.GetContainingClass();
+
+      if (
+        classNode != null
+        && classNode.GetClassNamesToTop(context)
+          .Any(type => IsClassNameSignifiesController(type.Name))
+        && !IsTrivialMethod(node)
+        && node.IsPublic()
+        && !node.ReturnType.IsTask(context)
+      )
       {
-        context.ReportDiagnostic(StandartRules.CreateFailedToAnalyze(node, exception));
+        context.ReportDiagnostic(Diagnostic.Create(Rule, node.Identifier.GetLocation(),
+          classNode.Identifier.ToString(), node.Identifier.ToString()));
       }
     }
 

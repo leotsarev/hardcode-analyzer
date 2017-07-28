@@ -1,13 +1,14 @@
 ﻿using System;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Tsarev.Analyzer.Helpers
 {
   /// <summary>
   /// Standart rules
   /// </summary>
-  public class StandartRules
+  public static class StandartRules
   {
     private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.FailedAnalyzerTitle), Resources.ResourceManager, typeof(Resources));
     private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.FailedAnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
@@ -28,7 +29,25 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Throw unexpected exception happened during method analyze
     /// </summary>
-    public static Diagnostic CreateFailedToAnalyze(MethodDeclarationSyntax node, Exception exception)
-      => Diagnostic.Create(FailedRule, node.Identifier.GetLocation(), exception.ToString(), node.Identifier.ToString());
+    public static Diagnostic CreateFailedToAnalyze(SyntaxNode node, Exception exception)
+      => Diagnostic.Create(FailedRule, node.GetLocation(), exception.ToString());
+
+    /// <summary>
+    /// Register syntax node action with wrapper that throws exceptions
+    /// </summary>
+    public static void RegisterSafeSyntaxNodeAction(this AnalysisContext context, Action<SyntaxNodeAnalysisContext> action, SyntaxKind syntaxKind)
+    {
+      context.RegisterSyntaxNodeAction(c =>
+      {
+        try
+        {
+          action(c);
+        }
+        catch (Exception exception)
+        {
+          c.ReportDiagnostic(CreateFailedToAnalyze(c.Node, exception));
+        }
+      }, syntaxKind);
+    }
   }
 }

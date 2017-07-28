@@ -25,14 +25,12 @@ namespace Tsarev.Analyzer.Hardcode.Url
       isEnabledByDefault: true, 
       description: Description);
 
-    private readonly ImmutableArray<DiagnosticDescriptor> _supportedDiagnostics = ImmutableArray.Create(Rule);
-
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => _supportedDiagnostics;
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule, StandartRules.FailedRule);
 
     public override void Initialize(AnalysisContext context)
     {
-      context.RegisterSyntaxNodeAction(AnalyzeLiteral, SyntaxKind.StringLiteralExpression);
-      context.RegisterSyntaxNodeAction(AnalyzeInterpolation, SyntaxKind.InterpolatedStringText);
+      context.RegisterSafeSyntaxNodeAction(AnalyzeLiteral, SyntaxKind.StringLiteralExpression);
+      context.RegisterSafeSyntaxNodeAction(AnalyzeInterpolation, SyntaxKind.InterpolatedStringText);
     }
 
     private static readonly string[] BlackList = { "http:", "https:", "ftp:", "tcp:"};

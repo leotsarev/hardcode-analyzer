@@ -24,10 +24,10 @@ namespace Tsarev.Analyzer.Hardcode.Vat
       isEnabledByDefault: true, 
       description: Description);
 
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule, StandartRules.FailedRule);
 
     public override void Initialize(AnalysisContext context)
-      => context.RegisterSyntaxNodeAction(AnalyzeNumericLiterals,
+      => context.RegisterSafeSyntaxNodeAction(AnalyzeNumericLiterals,
         SyntaxKind.NumericLiteralExpression);
 
     private static void AnalyzeNumericLiterals(SyntaxNodeAnalysisContext context)
