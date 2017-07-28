@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
@@ -31,10 +32,10 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Get int constant value from constant
     /// </summary>
-    public static int? GetIntOrDefault(this LiteralExpressionSyntax contextNode, SyntaxNodeAnalysisContext context)
+    public static decimal? GetNumericOrDefault(this LiteralExpressionSyntax contextNode, SyntaxNodeAnalysisContext context)
     {
       var constant = context.SemanticModel.GetConstantValue(contextNode);
-      return constant.HasValue ? (int?) (int) constant.Value : null;
+      return constant.HasValue ? (decimal?) Convert.ToDecimal(constant.Value) : null;
     }
   }
 }

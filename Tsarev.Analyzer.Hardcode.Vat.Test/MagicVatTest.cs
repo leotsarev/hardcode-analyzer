@@ -32,7 +32,45 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, 18));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18"));
+    }
+
+    [TestMethod]
+    public void TestDetectFloat18InCode()
+    {
+      var test = @"
+    using System;
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               var test = 18.0;
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18"));
+    }
+
+    [TestMethod]
+    public void TestDetectDecimal18InCode()
+    {
+      var test = @"
+    using System;
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               var test = 18.0m;
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18.0"));
     }
 
     [TestMethod]
@@ -51,7 +89,7 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, 118));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "118"));
     }
 
     [TestMethod]
@@ -70,7 +108,27 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, 82));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "82"));
+    }
+
+    [TestMethod]
+    public void TestDetectFloat118InCode()
+    {
+      var test = @"
+    using System;
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               int cost = 100;
+               var test = cost * 1.18;
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(10, 34, "1.18"));
     }
 
     [TestMethod]
@@ -86,12 +144,12 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
         }
     }";
 
-      VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, 82));
+      VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, "82"));
     }
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new VatHardcodeAnalyzer();
 
-    private DiagnosticResult ExpectVatHardcode(int line, int column, int value) => new DiagnosticResult
+    private DiagnosticResult ExpectVatHardcode(int line, int column, string value) => new DiagnosticResult
     {
       Id = nameof(VatHardcodeAnalyzer),
       Message = $"This constant {value} could be hardcoded VAT value.",
