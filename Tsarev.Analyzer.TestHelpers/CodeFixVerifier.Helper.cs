@@ -12,7 +12,7 @@ namespace Tsarev.Analyzer.TestHelpers
   /// Diagnostic Producer class with extra methods dealing with applying codefixes
   /// All methods are static
   /// </summary>
-  public abstract partial class CodeFixVerifier : DiagnosticVerifier
+  public abstract partial class CodeFixVerifier
   {
     /// <summary>
     /// Apply the inputted CodeAction to the inputted document.
@@ -41,8 +41,8 @@ namespace Tsarev.Analyzer.TestHelpers
       var oldArray = diagnostics.OrderBy(d => d.Location.SourceSpan.Start).ToArray();
       var newArray = newDiagnostics.OrderBy(d => d.Location.SourceSpan.Start).ToArray();
 
-      int oldIndex = 0;
-      int newIndex = 0;
+      var oldIndex = 0;
+      var newIndex = 0;
 
       while (newIndex < newArray.Length)
       {
@@ -63,10 +63,7 @@ namespace Tsarev.Analyzer.TestHelpers
     /// </summary>
     /// <param name="document">The Document to run the compiler diagnostic analyzers on</param>
     /// <returns>The compiler diagnostics that were found in the code</returns>
-    private static IEnumerable<Diagnostic> GetCompilerDiagnostics(Document document)
-    {
-      return document.GetSemanticModelAsync().Result.GetDiagnostics();
-    }
+    private static IEnumerable<Diagnostic> GetCompilerDiagnostics(Document document) => document.GetSemanticModelAsync().Result.GetDiagnostics();
 
     /// <summary>
     /// Given a document, turn it into a string based on the syntax root

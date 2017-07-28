@@ -6,7 +6,7 @@ using Tsarev.Analyzer.TestHelpers;
 namespace Tsarev.Analyzer.Web.Test
 {
   [TestClass]
-  public class AsyncControllerAnalyzerTest : CodeFixVerifier
+  public class AsyncControllerAnalyzerTest : DiagnosticVerifier
   {
     //No diagnostics expected to show up
     [TestMethod]
@@ -488,23 +488,18 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(3, 31, "FooController", "Method"));
     }
 
-    private DiagnosticResult ExpectAsyncWarning(int line, int column, string controller, string method)
+    private DiagnosticResult ExpectAsyncWarning(int line, int column, string controller, string method) => new DiagnosticResult
     {
-      return new DiagnosticResult
-      {
-        Id = nameof(AsyncControllerAnalyzer),
-        Message = string.Format("Controller '{0}' contains method '{1}' that executes synchronously. Consider converting to method that returns Task<T>", controller, method),
-        Severity = DiagnosticSeverity.Warning,
-        Locations =
-              new[] {
-                            new DiagnosticResultLocation("Test0.cs", line, column)
-                  }
-      };
-    }
+      Id = nameof(AsyncControllerAnalyzer),
+      Message =
+        $"Controller '{controller}' contains method '{method}' that executes synchronously. Consider converting to method that returns Task<T>",
+      Severity = DiagnosticSeverity.Warning,
+      Locations =
+        new[] {
+          new DiagnosticResultLocation("Test0.cs", line, column)
+        }
+    };
 
-    protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-    {
-      return new Analyzer.Web.AsyncControllerAnalyzer();
-    }
+    protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new AsyncControllerAnalyzer();
   }
 }

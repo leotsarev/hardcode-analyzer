@@ -6,7 +6,7 @@ using Tsarev.Analyzer.TestHelpers;
 namespace Tsarev.Analyzer.Hardcode.Url.Test
 {
   [TestClass]
-  public class UnitTest : CodeFixVerifier
+  public class UnitTest : DiagnosticVerifier
   {
 
     //No diagnostics expected to show up
@@ -18,19 +18,18 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    private DiagnosticResult ExpectUlrHardcode(int line, int column, string actualUrl)
-    {
-      return new DiagnosticResult
+    private DiagnosticResult ExpectUlrHardcode(int line, int column, string actualUrl) 
+      => new DiagnosticResult
       {
         Id = "UrlHardcodeAnalyzer",
         Message = $"String '{actualUrl}' contains hardcoded URL",
         Severity = DiagnosticSeverity.Warning,
         Locations =
-              new[] {
-                            new DiagnosticResultLocation("Test0.cs", line, column)
-                  }
+          new[]
+          {
+            new DiagnosticResultLocation("Test0.cs", line, column)
+          }
       };
-    }
 
     //Diagnostic triggered and checked for
     [TestMethod]
@@ -189,9 +188,6 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     }
 
 
-    protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-    {
-      return new UrlHardcodeAnalyzer();
-    }
+    protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new UrlHardcodeAnalyzer();
   }
 }

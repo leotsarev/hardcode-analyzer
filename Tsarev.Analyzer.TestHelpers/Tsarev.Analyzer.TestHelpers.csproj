@@ -107,11 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Verifiers\CodeFixVerifier.cs" />
-    <Compile Include="Verifiers\DiagnosticVerifier.cs" />
-    <Compile Include="Helpers\CodeFixVerifier.Helper.cs" />
-    <Compile Include="Helpers\DiagnosticResult.cs" />
-    <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
+    <Compile Include="CodeFixVerifier.cs" />
+    <Compile Include="DiagnosticVerifier.cs" />
+    <Compile Include="CodeFixVerifier.Helper.cs" />
+    <Compile Include="DiagnosticResult.cs" />
+    <Compile Include="DiagnosticVerifier.Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

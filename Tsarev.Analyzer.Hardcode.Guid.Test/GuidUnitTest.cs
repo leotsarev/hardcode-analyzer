@@ -6,7 +6,7 @@ using Tsarev.Analyzer.TestHelpers;
 namespace Tsarev.Analyzer.Hardcode.Guid.Test
 {
   [TestClass]
-  public class GuidUnitTest : CodeFixVerifier
+  public class GuidUnitTest : DiagnosticVerifier
   {
 
     //No diagnostics expected to show up

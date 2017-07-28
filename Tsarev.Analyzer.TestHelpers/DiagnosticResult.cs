@@ -20,9 +20,9 @@ namespace Tsarev.Analyzer.TestHelpers
         throw new ArgumentOutOfRangeException(nameof(column), "column must be >= -1");
       }
 
-      this.Path = path;
-      this.Line = line;
-      this.Column = column;
+      Path = path;
+      Line = line;
+      Column = column;
     }
 
     public string Path { get; }
@@ -35,23 +35,13 @@ namespace Tsarev.Analyzer.TestHelpers
   /// </summary>
   public struct DiagnosticResult
   {
-    private DiagnosticResultLocation[] locations;
+    private DiagnosticResultLocation[] _locations;
 
     public DiagnosticResultLocation[] Locations
     {
-      get
-      {
-        if (this.locations == null)
-        {
-          this.locations = new DiagnosticResultLocation[] { };
-        }
-        return this.locations;
-      }
+      get => _locations ?? (_locations = new DiagnosticResultLocation[] { });
 
-      set
-      {
-        this.locations = value;
-      }
+      set => _locations = value;
     }
 
     public DiagnosticSeverity Severity { get; set; }
@@ -60,28 +50,10 @@ namespace Tsarev.Analyzer.TestHelpers
 
     public string Message { get; set; }
 
-    public string Path
-    {
-      get
-      {
-        return this.Locations.Length > 0 ? this.Locations[0].Path : "";
-      }
-    }
+    public string Path => Locations.Length > 0 ? Locations[0].Path : "";
 
-    public int Line
-    {
-      get
-      {
-        return this.Locations.Length > 0 ? this.Locations[0].Line : -1;
-      }
-    }
+    public int Line => Locations.Length > 0 ? Locations[0].Line : -1;
 
-    public int Column
-    {
-      get
-      {
-        return this.Locations.Length > 0 ? this.Locations[0].Column : -1;
-      }
-    }
+    public int Column => Locations.Length > 0 ? Locations[0].Column : -1;
   }
 }
