@@ -59,6 +59,13 @@ namespace Tsarev.Analyzer.Hardcode.Vat
         return;
       }
 
+      if (literal.Parent is ArgumentSyntax &&
+          literal.Parent.Parent is BracketedArgumentListSyntax)
+      {
+        //that's probably something like arr[18], which is stupid, but should be allowed
+        return;
+      }
+
       var value = literal.GetNumericOrDefault(context);
       if (value != null && VatVariants.Any(variant => variant == value))
       {

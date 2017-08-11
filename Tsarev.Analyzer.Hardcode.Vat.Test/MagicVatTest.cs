@@ -148,6 +148,26 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
     }
 
     [TestMethod]
+    public void TestAllowInIndexer()
+    {
+      var test = @"
+    using System;
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+          private readonly List<int> ints = new List<int>();
+          public void Test()
+            {
+               int val = ints[18];
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestMigrationIgnored()
     {
       var test = @"
