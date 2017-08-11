@@ -145,6 +145,19 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     }
 
     [TestMethod]
+    public void TestWebServiceAttribute()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        [WebService(Namespace = ""http://monopoly.su/"")]
+        class TypeName {  }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestSoapTypeAttributee()
     {
       var test = @"
@@ -164,6 +177,21 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     namespace ConsoleApplication1
     {
       public void Foo([System.Xml.Serialization.XmlArrayItemAttribute(Namespace = ""http://tempuri.org/Order"")] int[] x) 
+      {
+      }
+  }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestSoapRpcMethodAttributeAttribute()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+      [System.Web.Services.Protocols.SoapRpcMethodAttribute(""https://www.m2m.mts.ru/soap/m2m/getLocTimeDiff"", RequestNamespace=""https://www.m2m.mts.ru/soap/m2m"", ResponseNamespace=""http://schemas.xmlsoap.org/soap/encoding/"")]
+      public void Foo(int[] x) 
       {
       }
   }";

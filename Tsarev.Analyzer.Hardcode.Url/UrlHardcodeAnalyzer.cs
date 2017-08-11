@@ -46,12 +46,13 @@ namespace Tsarev.Analyzer.Hardcode.Url
         "SoapDocumentMethodAttribute",
         "SoapRpcMethodAttribute",
         "SoapTypeAttribute",
-        "XmlArrayItemAttribute"
+        "XmlArrayItemAttribute",
+        "WebServiceAttribute"
       };
 
     private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
     {
-      var node = ((LiteralExpressionSyntax)context.Node);
+      var node = (LiteralExpressionSyntax)context.Node;
 
       if (IsArgumentOfWhiteListedAttribute(node))
       {
@@ -62,7 +63,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
     }
     private static void AnalyzeInterpolation(SyntaxNodeAnalysisContext context)
     {
-      var node = ((InterpolatedStringTextSyntax)context.Node);
+      var node = (InterpolatedStringTextSyntax)context.Node;
 
       if (IsArgumentOfWhiteListedAttribute(node))
       {
