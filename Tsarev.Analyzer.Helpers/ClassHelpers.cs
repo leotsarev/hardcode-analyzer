@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Tsarev.Analyzer.Helpers
 {
@@ -15,6 +16,7 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Return nearest containing class (not including self)
     /// </summary>
+    [CanBeNull]
     public static ClassDeclarationSyntax GetContainingClass(this SyntaxNode node) 
       => node.Ancestors().OfType<ClassDeclarationSyntax>().FirstOrDefault();
 

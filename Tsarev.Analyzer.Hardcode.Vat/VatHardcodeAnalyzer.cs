@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -51,12 +52,31 @@ namespace Tsarev.Analyzer.Hardcode.Vat
     {
       if (!(context.Node is LiteralExpressionSyntax literal)) return;
 
+      var containingClass = context.Node.GetContainingClass();
+
+      if (IsProbablyMigration(containingClass))
+      {
+        return;
+      }
+
       var value = literal.GetNumericOrDefault(context);
       if (value != null && VatVariants.Any(variant => variant == value))
       {
         context.ReportDiagnostic(
-          Diagnostic.Create(Rule, context.Node.GetLocation(), value.Value.ToString(CultureInfo.InvariantCulture)));
+          Diagnostic.Create(Rule, context.Node.GetLocation(),
+            value.Value.ToString(CultureInfo.InvariantCulture)));
       }
+    }
+
+    private static bool IsProbablyMigration([CanBeNull] ClassDeclarationSyntax containingClass)
+    {
+      return containingClass?.BaseList?.Types.Any(c => IsProbablyDbMigration(c.Type)) ?? false;
+    }
+
+    private static bool IsProbablyDbMigration(TypeSyntax baseClass)
+    {
+      var baseClassName = (baseClass as IdentifierNameSyntax)?.Identifier.Text;
+      return baseClassName == "DbMigration";
     }
   }
 }

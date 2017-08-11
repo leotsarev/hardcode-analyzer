@@ -147,6 +147,35 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, "82"));
     }
 
+    [TestMethod]
+    public void TestMigrationIgnored()
+    {
+      var test = @"
+    using System.Data.Entity.Migrations;
+    
+    public partial class FooMigration : DbMigration
+    {
+        public override void Up()
+        {
+            CreateTable(
+                ""dbo.FooTable"",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        Value = c.Decimal(precision: 18, scale: 2),
+                    })
+                .PrimaryKey(t => t.Id);
+        }
+        
+        public override void Down()
+        {
+            DropTable(""dbo.FooTable"");
+        }
+    }
+";
+      VerifyCSharpDiagnostic(test);
+    }
+
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new VatHardcodeAnalyzer();
 
     private DiagnosticResult ExpectVatHardcode(int line, int column, string value) => new DiagnosticResult
