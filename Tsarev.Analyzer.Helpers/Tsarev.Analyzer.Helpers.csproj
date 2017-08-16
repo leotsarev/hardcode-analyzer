@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ClassHelpers.cs" />
+    <Compile Include="EntityFrameworkHelpers.cs" />
     <Compile Include="ExpressionHelpers.cs" />
     <Compile Include="MethodHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

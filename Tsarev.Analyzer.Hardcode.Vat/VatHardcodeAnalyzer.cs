@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -56,33 +55,11 @@ namespace Tsarev.Analyzer.Hardcode.Vat
 
       var containingClass = context.Node.GetContainingClass();
 
-      if (IsProbablyMigration(containingClass))
+      if (containingClass.IsProbablyMigration() ||
+          literal.IsWhiteListedParameter(context, WhiteListParameters) ||
+          literal.IsArrayIndexArgument())
       {
         return;
-      }
-
-      if (literal.Parent is AttributeArgumentSyntax attributeArgumentSyntax)
-      {
-        var parameter =  attributeArgumentSyntax.GetCorrespondingParameter(context);
-        if (IsWhiteListedParameter(parameter))
-        {
-          return;
-        }
-      }
-
-      if (literal.Parent is ArgumentSyntax argumentSyntax)
-      {
-        if (literal.Parent.Parent is BracketedArgumentListSyntax)
-        {
-          //that's probably something like arr[18], which is stupid, but should be allowed
-          return;
-        }
-
-        var parameter = argumentSyntax.GetCorrespondingParameter(context);
-        if (IsWhiteListedParameter(parameter))
-        {
-          return;
-        }
       }
 
       var value = literal.GetNumericOrDefault(context);
@@ -92,21 +69,6 @@ namespace Tsarev.Analyzer.Hardcode.Vat
           Diagnostic.Create(Rule, context.Node.GetLocation(),
             value.Value.ToString(CultureInfo.InvariantCulture)));
       }
-    }
-
-    private static bool IsWhiteListedParameter(IParameterSymbol parameter) => parameter != null &&
-                                                                              WhiteListParameters
-                                                                                .Contains(parameter
-                                                                                  .Name
-                                                                                  .ToLowerInvariant());
-
-    private static bool IsProbablyMigration([CanBeNull] ClassDeclarationSyntax containingClass) =>
-      containingClass?.BaseList?.Types.Any(c => IsProbablyDbMigration(c.Type)) ?? false;
-
-    private static bool IsProbablyDbMigration(TypeSyntax baseClass)
-    {
-      var baseClassName = (baseClass as IdentifierNameSyntax)?.Identifier.Text;
-      return baseClassName == "DbMigration";
     }
   }
 }

@@ -73,5 +73,40 @@ namespace Tsarev.Analyzer.Helpers
     /// </summary>
     public static bool IsOneOfMethods(this ISymbol calledMethod, IEnumerable<ISymbol> candidates) 
       => candidates.Any(parseMethod => parseMethod.Equals(calledMethod));
+
+    /// <summary>
+    /// Is syntaxNode corresponds to parameter that part of some whitelist and should not be analyzed
+    /// </summary>
+    public static bool IsWhiteListedParameter(this SyntaxNode literal, SyntaxNodeAnalysisContext context, string[] whiteList)
+    {
+      if (literal.Parent is AttributeArgumentSyntax attributeArgumentSyntax)
+      {
+        var parameter = attributeArgumentSyntax.GetCorrespondingParameter(context);
+        if (IsWhiteListedParameter(parameter, whiteList))
+        {
+          return true;
+        }
+      }
+
+      if (literal.Parent is ArgumentSyntax argumentSyntax)
+      {
+        var parameter = argumentSyntax.GetCorrespondingParameter(context);
+        if (IsWhiteListedParameter(parameter, whiteList))
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    private static bool IsWhiteListedParameter(IParameterSymbol parameter, string[] whiteList)
+      => whiteList.Contains(parameter?.Name.ToLowerInvariant());
+    /// <summary>
+    /// Is syntax node used to index array
+    /// </summary>
+    public static bool IsArrayIndexArgument(this LiteralExpressionSyntax literal)
+    {
+      return literal.Parent is ArgumentSyntax && literal.Parent.Parent is BracketedArgumentListSyntax;
+    }
   }
 }

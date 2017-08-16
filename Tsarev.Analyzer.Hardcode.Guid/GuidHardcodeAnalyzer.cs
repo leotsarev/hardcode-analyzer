@@ -42,8 +42,12 @@ namespace Tsarev.Analyzer.Hardcode.Guid
       context.RegisterSafeSyntaxNodeAction(AnalyzeCtor, SyntaxKind.ObjectCreationExpression);
     }
 
-    private void AnalyzeCtor(SyntaxNodeAnalysisContext context)
+    private static void AnalyzeCtor(SyntaxNodeAnalysisContext context)
     {
+      if (context.Node.GetContainingClass().IsProbablyMigration())
+      {
+        return;
+      }
 
       if (context.Node is ObjectCreationExpressionSyntax createNode)
       {
@@ -54,7 +58,6 @@ namespace Tsarev.Analyzer.Hardcode.Guid
           context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
         }
       }
-
     }
 
     private static bool FirstArgumentIsStringLiteral(
@@ -67,6 +70,11 @@ namespace Tsarev.Analyzer.Hardcode.Guid
 
     private static void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
     {
+      if (context.Node.GetContainingClass().IsProbablyMigration())
+      {
+        return;
+      }
+
       if (context.Node is InvocationExpressionSyntax invocationExpressionSyntax)
       {
         var guidType = context.GetType<System.Guid>();

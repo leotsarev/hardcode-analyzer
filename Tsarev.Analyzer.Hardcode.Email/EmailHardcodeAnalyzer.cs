@@ -36,6 +36,13 @@ namespace Tsarev.Analyzer.Hardcode.Email
 
     private void AnalyzeExpression(SyntaxNodeAnalysisContext context)
     {
+      var containingClass = context.Node.GetContainingClass();
+
+      if (containingClass.IsProbablyMigration())
+      {
+        return;
+      }
+
       if (context.Node is BinaryExpressionSyntax expression)
       {
         if (IsAtLiteral(expression.Left) && expression.Right.IsConstant())
@@ -72,6 +79,10 @@ namespace Tsarev.Analyzer.Hardcode.Email
 
     private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
     {
+      if (context.Node.IsWhiteListedParameter(context, new[] { "sql" }))
+      {
+        return;
+      }
       CheckStringValue(context, context.Node.GetLiteralStringValueOrDefault());
     }
 
