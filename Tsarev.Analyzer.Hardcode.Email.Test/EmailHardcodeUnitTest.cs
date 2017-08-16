@@ -71,6 +71,24 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
     }
 
     [TestMethod]
+    public void TestSqlParameter()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               var test = ""@p1"";
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestInterpolationConstant()
     {
       var test = @"

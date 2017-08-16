@@ -77,7 +77,7 @@ namespace Tsarev.Analyzer.Hardcode.Email
 
     private static void CheckStringValue(SyntaxNodeAnalysisContext context, string value)
     {
-      if (value != "@" && value.Contains("@"))
+      if (value != "@" && value.Contains("@") && value.LastIndexOf("@", StringComparison.Ordinal) != 0)
       {
         if (context.Node.Parent is ArgumentSyntax argument)
         {
