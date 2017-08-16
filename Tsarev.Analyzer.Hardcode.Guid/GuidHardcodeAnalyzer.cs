@@ -77,7 +77,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid
             .Union(guidType.GetMembers(nameof(System.Guid.TryParse)));
 
         var calledMethod = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
-        if (guidParse.Any(parseMethod => parseMethod.Equals(calledMethod))
+        if (calledMethod.IsOneOfMethods(guidParse)
             && FirstArgumentIsStringLiteral(invocationExpressionSyntax.ArgumentList)
             && !PartOfLikelyEntity(context.Node))
         {

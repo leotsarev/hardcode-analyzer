@@ -30,7 +30,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
     public override void Initialize(AnalysisContext context)
     {
       context.RegisterSafeSyntaxNodeAction(AnalyzeLiteral, SyntaxKind.StringLiteralExpression);
-      context.RegisterSafeSyntaxNodeAction(AnalyzeInterpolation, SyntaxKind.InterpolatedStringText);
+      context.RegisterSafeSyntaxNodeAction(AnalyzeLiteral, SyntaxKind.InterpolatedStringText);
     }
 
     private static readonly string[] BlackList = { "http:", "https:", "ftp:", "tcp:"};
@@ -52,25 +52,12 @@ namespace Tsarev.Analyzer.Hardcode.Url
 
     private static void AnalyzeLiteral(SyntaxNodeAnalysisContext context)
     {
-      var node = (LiteralExpressionSyntax)context.Node;
-
-      if (IsArgumentOfWhiteListedAttribute(node))
+      if (IsArgumentOfWhiteListedAttribute(context.Node))
       {
         return;
       }
 
-      CheckStringValue(context, node.Token.ValueText);
-    }
-    private static void AnalyzeInterpolation(SyntaxNodeAnalysisContext context)
-    {
-      var node = (InterpolatedStringTextSyntax)context.Node;
-
-      if (IsArgumentOfWhiteListedAttribute(node))
-      {
-        return;
-      }
-
-      CheckStringValue(context, node.TextToken.ValueText);
+      CheckStringValue(context, context.Node.GetLiteralStringValueOrDefault());
     }
 
     private static bool IsArgumentOfWhiteListedAttribute(SyntaxNode node)

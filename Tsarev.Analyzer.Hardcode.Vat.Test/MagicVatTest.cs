@@ -168,6 +168,50 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
     }
 
     [TestMethod]
+    public void TestAllowInIndexAttribute()
+    {
+      var test = @"
+    using System;
+     public class ExcelColumnIndexAttribute : Attribute
+    {
+        public int Index { get; set; }
+
+        public ExcelColumnIndexAttribute(int index)
+        {
+            Index = index;
+        }
+    }
+        class TypeName
+        {   
+          [ExcelColumnIndexAttribute(18)]
+          public int Prop {get;set;}
+        }
+";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestAllowInSubstring()
+    {
+      var test = @"
+    
+        class TypeName
+        {   
+           public static string Substring(int startIndex, int length)
+              {
+              }
+           public void Test()
+            {
+               Substring(18,18);
+            }
+        }
+";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestMigrationIgnored()
     {
       var test = @"

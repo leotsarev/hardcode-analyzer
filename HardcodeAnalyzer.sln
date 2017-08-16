@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hardcode", "Hardcode", "{06
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Vat.Test", "Tsarev.Analyzer.Hardcode.Vat.Test\Tsarev.Analyzer.Hardcode.Vat.Test.csproj", "{48EAEF3C-CB75-4D2B-AA26-2D4615B0BF4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Email", "Tsarev.Analyzer.Hardcode.Email\Tsarev.Analyzer.Hardcode.Email.csproj", "{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Email.Test", "Tsarev.Analyzer.Hardcode.Email.Test\Tsarev.Analyzer.Hardcode.Email.Test.csproj", "{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,14 @@ Global
 		{48EAEF3C-CB75-4D2B-AA26-2D4615B0BF4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48EAEF3C-CB75-4D2B-AA26-2D4615B0BF4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48EAEF3C-CB75-4D2B-AA26-2D4615B0BF4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,5 +104,7 @@ Global
 		{A9EDEBB1-8D09-43D3-B0DD-B7D78F405E85} = {06D9E499-7167-4C8F-A6EC-3A1390C0F79E}
 		{9EC48369-66A3-4147-9490-6893A2933397} = {06D9E499-7167-4C8F-A6EC-3A1390C0F79E}
 		{48EAEF3C-CB75-4D2B-AA26-2D4615B0BF4D} = {06D9E499-7167-4C8F-A6EC-3A1390C0F79E}
+		{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A} = {06D9E499-7167-4C8F-A6EC-3A1390C0F79E}
+		{4E74A79F-74BC-49CF-9330-C1EAFCE07E42} = {06D9E499-7167-4C8F-A6EC-3A1390C0F79E}
 	EndGlobalSection
 EndGlobal

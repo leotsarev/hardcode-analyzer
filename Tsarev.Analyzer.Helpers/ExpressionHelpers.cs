@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Tsarev.Analyzer.Helpers
@@ -15,13 +16,26 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Is node constant literal or not
     /// </summary>
-    public static bool IsConstant (this ExpressionSyntax syntax)
+    public static bool IsConstant (this SyntaxNode syntax)
     {
       if (syntax is InitializerExpressionSyntax initializer)
       {
         return initializer.Expressions.All(expression => expression.IsConstant());
       }
-      return syntax.IsKind(SyntaxKind.CharacterLiteralExpression, SyntaxKind.TrueLiteralExpression, SyntaxKind.FalseLiteralExpression, SyntaxKind.NumericLiteralExpression, SyntaxKind.StringLiteralExpression);
+      if (syntax is InterpolatedStringExpressionSyntax interpolated)
+      {
+        return interpolated.Contents.All(IsConstant);
+      }
+      if (syntax is BinaryExpressionSyntax binary)
+      {
+        return IsConstant(binary.Left) && IsConstant(binary.Right);
+      }
+      return syntax.IsKind(
+        SyntaxKind.CharacterLiteralExpression, 
+        SyntaxKind.TrueLiteralExpression,
+        SyntaxKind.FalseLiteralExpression, 
+        SyntaxKind.NumericLiteralExpression,
+        SyntaxKind.StringLiteralExpression);
     }
 
     /// <summary>
@@ -36,6 +50,23 @@ namespace Tsarev.Analyzer.Helpers
     {
       var constant = context.SemanticModel.GetConstantValue(contextNode);
       return constant.HasValue ? (decimal?) Convert.ToDecimal(constant.Value) : null;
+    }
+
+    /// <summary>
+    /// Get string constant value from constant
+    /// </summary>
+    [CanBeNull]
+    public static string GetLiteralStringValueOrDefault(this SyntaxNode syntaxNode)
+    {
+      if (syntaxNode is LiteralExpressionSyntax literal)
+      {
+        return literal.Token.ValueText;
+      }
+      if (syntaxNode is InterpolatedStringTextSyntax interpolated)
+      {
+        return interpolated.TextToken.ValueText;
+      }
+      return null;
     }
   }
 }

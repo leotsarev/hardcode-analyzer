@@ -44,6 +44,8 @@ namespace Tsarev.Analyzer.Hardcode.Vat
       VatValue, 100 - VatValue, 100 + VatValue, 1 - 0.01m * VatValue, 1 + 0.01m * VatValue
     };
 
+    private static readonly string[] WhiteListParameters = {"index", "startindex", "length" };
+
     public override void Initialize(AnalysisContext context)
       => context.RegisterSafeSyntaxNodeAction(AnalyzeNumericLiterals,
         SyntaxKind.NumericLiteralExpression);
@@ -59,11 +61,28 @@ namespace Tsarev.Analyzer.Hardcode.Vat
         return;
       }
 
-      if (literal.Parent is ArgumentSyntax &&
-          literal.Parent.Parent is BracketedArgumentListSyntax)
+      if (literal.Parent is AttributeArgumentSyntax attributeArgumentSyntax)
       {
-        //that's probably something like arr[18], which is stupid, but should be allowed
-        return;
+        var parameter =  attributeArgumentSyntax.GetCorrespondingParameter(context);
+        if (IsWhiteListedParameter(parameter))
+        {
+          return;
+        }
+      }
+
+      if (literal.Parent is ArgumentSyntax argumentSyntax)
+      {
+        if (literal.Parent.Parent is BracketedArgumentListSyntax)
+        {
+          //that's probably something like arr[18], which is stupid, but should be allowed
+          return;
+        }
+
+        var parameter = argumentSyntax.GetCorrespondingParameter(context);
+        if (IsWhiteListedParameter(parameter))
+        {
+          return;
+        }
       }
 
       var value = literal.GetNumericOrDefault(context);
@@ -75,10 +94,14 @@ namespace Tsarev.Analyzer.Hardcode.Vat
       }
     }
 
-    private static bool IsProbablyMigration([CanBeNull] ClassDeclarationSyntax containingClass)
-    {
-      return containingClass?.BaseList?.Types.Any(c => IsProbablyDbMigration(c.Type)) ?? false;
-    }
+    private static bool IsWhiteListedParameter(IParameterSymbol parameter) => parameter != null &&
+                                                                              WhiteListParameters
+                                                                                .Contains(parameter
+                                                                                  .Name
+                                                                                  .ToLowerInvariant());
+
+    private static bool IsProbablyMigration([CanBeNull] ClassDeclarationSyntax containingClass) =>
+      containingClass?.BaseList?.Types.Any(c => IsProbablyDbMigration(c.Type)) ?? false;
 
     private static bool IsProbablyDbMigration(TypeSyntax baseClass)
     {
