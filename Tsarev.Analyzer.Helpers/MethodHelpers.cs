@@ -38,7 +38,7 @@ namespace Tsarev.Analyzer.Helpers
     {
       var argumentPosition = argumentSyntax.GetArgumentPosition();
       var calledMethodSymbol = argumentSyntax.GetCalledMethod(context);
-      return calledMethodSymbol?.Parameters[argumentPosition];
+      return argumentPosition < calledMethodSymbol?.Parameters.Length ? calledMethodSymbol.Parameters[argumentPosition] : null;
     }
 
     /// <summary>

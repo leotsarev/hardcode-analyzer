@@ -36,6 +36,54 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
     }
 
     [TestMethod]
+    public void TestDetectAttributeParam()
+    {
+      var test = @"
+using System; 
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public class ColumnAttribute : Attribute {
+        private readonly string _name;
+        private string _typeName;
+        private int _order = -1;
+ 
+    public ColumnAttribute()
+    {
+    }
+
+    public ColumnAttribute(string name)
+    {
+      _name = name;
+    }
+
+    /// <summary>
+    /// The name of the column the property is mapped to.
+    /// </summary>
+    public string Name
+    {
+      get { return _name; }
+    }
+
+    /// <summary>
+    /// The zero-based order of the column the property is mapped to.
+    /// </summary>
+    public int Order
+    {
+      get { return _order; }
+      set { _order = value; }
+    }
+  }
+
+  public class TruckDriversNew
+    {
+        [Column(""transport_id"", Order = 0)]
+        public Guid TransportId { get; set; }
+    }
+}";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestDetectFloat18InCode()
     {
       var test = @"
