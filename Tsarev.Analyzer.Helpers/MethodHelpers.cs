@@ -27,8 +27,18 @@ namespace Tsarev.Analyzer.Helpers
     /// <summary>
     /// Get argument position in list of arguments
     /// </summary>
-    public static int GetArgumentPosition(this ArgumentSyntax argumentSyntax) =>
-      ((ArgumentListSyntax)argumentSyntax.Parent).Arguments.IndexOf(argumentSyntax);
+    public static int? GetArgumentPosition(this ArgumentSyntax argumentSyntax)
+    {
+      if (argumentSyntax.Parent is BracketedArgumentListSyntax bracketedArgumentList)
+      {
+        bracketedArgumentList.Arguments.IndexOf(argumentSyntax);
+      }
+      if (argumentSyntax.Parent is ArgumentListSyntax argumentSyntaxParent)
+      {
+        return argumentSyntaxParent.Arguments.IndexOf(argumentSyntax);
+      }
+      return null;
+    }
 
     /// <summary>
     /// Get parameter that corresponds to argument
@@ -64,8 +74,12 @@ namespace Tsarev.Analyzer.Helpers
     public static IParameterSymbol GetCorrespondingParameter(this ArgumentSyntax argumentSyntax, SyntaxNodeAnalysisContext context)
     {
       var argumentPosition = argumentSyntax.GetArgumentPosition();
+      if (argumentPosition == null)
+      {
+        return null;
+      }
       var calledMethodSymbol = argumentSyntax.GetCalledMethod(context);
-      return calledMethodSymbol?.Parameters[argumentPosition];
+      return calledMethodSymbol?.Parameters[(int) argumentPosition];
     }
 
     /// <summary>
