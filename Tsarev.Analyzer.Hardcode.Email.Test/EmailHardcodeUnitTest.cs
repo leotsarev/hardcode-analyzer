@@ -89,6 +89,60 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
     }
 
     [TestMethod]
+    public void TestSqlParameterInArgument()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+                 command.Parameters.AddWithValue(""@d"", 0);
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestXsltStringIgnored()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+               var test = ""/doc/members/member[@name='T:{0}']"";
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    public void TestSqlInString()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+           public void Test()
+            {
+                string sqlCommandText = ""DECLARE @knownCityKey int = 0 "";
+            }
+        }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
     public void TestInterpolationConstant()
     {
       var test = @"
