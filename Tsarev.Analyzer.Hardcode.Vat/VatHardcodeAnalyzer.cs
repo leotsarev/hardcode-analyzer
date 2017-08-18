@@ -43,7 +43,8 @@ namespace Tsarev.Analyzer.Hardcode.Vat
       VatValue, 100 - VatValue, 100 + VatValue, 1 - 0.01m * VatValue, 1 + 0.01m * VatValue
     };
 
-    private static readonly string[] WhiteListParameters = {"index", "startindex", "length" };
+    private static readonly string[] WhiteListParameters =
+      {"index", "startindex", "length", "col", "precision",};
 
     public override void Initialize(AnalysisContext context)
       => context.RegisterSafeSyntaxNodeAction(AnalyzeNumericLiterals,
