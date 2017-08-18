@@ -12,27 +12,14 @@ namespace Tsarev.Analyzer.Hardcode.Vat
   [DiagnosticAnalyzer(LanguageNames.CSharp)]
   public class VatHardcodeAnalyzer : DiagnosticAnalyzer
   {
-
-    private static readonly LocalizableString Title =
-      new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager,
-        typeof(Resources));
-
-    private static readonly LocalizableString MessageFormat =
-      new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat),
-        Resources.ResourceManager, typeof(Resources));
-
-    private static readonly LocalizableString Description =
-      new LocalizableResourceString(nameof(Resources.AnalyzerDescription),
-        Resources.ResourceManager, typeof(Resources));
-
     private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(
       nameof(VatHardcodeAnalyzer),
-      Title,
-      MessageFormat,
+      "Hardcoded VAT",
+      "This constant {0} could be hardcoded VAT value.",
       "Hardcode",
       DiagnosticSeverity.Warning,
-      isEnabledByDefault: true,
-      description: Description);
+      true,
+      "This is a hard error to hardcode VAT rate into program, as VAT varies by jurisdiction, contractor, specific contract or activity. This should be part of your business logic and stored in your database.");
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } =
       ImmutableArray.Create(Rule, StandartRules.FailedRule);
