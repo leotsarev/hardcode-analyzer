@@ -27,12 +27,6 @@ namespace Tsarev.Analyzer.Helpers
       description: Description);
 
     /// <summary>
-    /// Throw unexpected exception happened during method analyze
-    /// </summary>
-    public static Diagnostic CreateFailedToAnalyze(SyntaxNode node, Exception exception)
-      => Diagnostic.Create(FailedRule, node.GetLocation(), exception.ToString());
-
-    /// <summary>
     /// Register syntax node action with wrapper that throws exceptions
     /// </summary>
     public static void RegisterSafeSyntaxNodeAction(this AnalysisContext context, Action<SyntaxNodeAnalysisContext> action, SyntaxKind syntaxKind)
@@ -45,7 +39,7 @@ namespace Tsarev.Analyzer.Helpers
         }
         catch (Exception exception)
         {
-          c.ReportDiagnostic(CreateFailedToAnalyze(c.Node, exception));
+          c.ReportDiagnostic(Diagnostic.Create(FailedRule, c.Node.GetLocation(), exception.ToString()));
         }
       }, syntaxKind);
     }
