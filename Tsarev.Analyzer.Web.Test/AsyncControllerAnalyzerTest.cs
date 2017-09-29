@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Runtime.InteropServices.ComTypes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Tsarev.Analyzer.TestHelpers;
@@ -486,6 +487,54 @@ namespace Tsarev.Analyzer.Web.Test
       }";
 
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(3, 31, "FooController", "Method"));
+    }
+
+    [TestMethod]
+    [Ignore] //need to understand that local variables actually constant
+    public void TestControllerTrivialWithPartialView()
+    {
+      var test = @"
+      class FooController {
+        public ActionResult SelectView(bool isFirstView)
+        {
+            return isFirstView 
+                ? PartialView(""First"")
+                : PartialView(""Second"");
+        }
+  }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    [Ignore] //need to understand that local variables actually constant
+    public void TestControllerTrivialWithFile()
+    {
+      var test = @"
+      class FooController {
+       public ActionResult DownLoadFile()
+        {
+              var data = new [] {1, 2, 3};
+              return File(data, ""application/vnd.ms-excel"", ""test.txt"");
+        }
+}";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [TestMethod]
+    [Ignore] //need to understand that local variables actually constant
+    public void TestControllerTrivialWithTempData()
+    {
+      var test = @"
+      class FooController {
+       public ActionResult GetFromTempData()
+        {
+            return View(""ViewName"", TempData[1]);
+        }
+}";
+
+      VerifyCSharpDiagnostic(test);
     }
 
     private DiagnosticResult ExpectAsyncWarning(int line, int column, string controller, string method) => new DiagnosticResult
