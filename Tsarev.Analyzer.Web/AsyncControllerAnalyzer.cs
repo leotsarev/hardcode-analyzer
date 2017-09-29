@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.CSharp;
@@ -106,21 +106,28 @@ namespace Tsarev.Analyzer.Web
       {
         return true;
       }
+
+      if (syntax is ConditionalExpressionSyntax conditionalExpressionSyntax)
+      {
+        return IsWebTrivialExpression(conditionalExpressionSyntax.Condition) &&
+               IsWebTrivialExpression(conditionalExpressionSyntax.WhenFalse) &&
+               IsWebTrivialExpression(conditionalExpressionSyntax.WhenTrue);
+      }
       return syntax.IsConstant() || IsConstViewInvoke(syntax);
     }
 
+    private static readonly string[] ResultMethodNames = {"View", "PartialView", "File"};
+
     private static bool IsConstViewInvoke(ExpressionSyntax syntax)
     {
-      var invokeExpression = syntax as InvocationExpressionSyntax;
-
-      if (invokeExpression == null) return false;
+      if (!(syntax is InvocationExpressionSyntax invokeExpression)) return false;
 
       var methodName = (invokeExpression.Expression as SimpleNameSyntax)?.Identifier.Text;
-      var isViewCall = methodName == "View" || methodName == "PartialView";
 
       var arguments = invokeExpression.ArgumentList.Arguments;
 
-      return isViewCall && (arguments.All(argument => IsWebTrivialExpression(argument.Expression)));
+      return ResultMethodNames.Contains(methodName) &&
+             arguments.All(argument => IsWebTrivialExpression(argument.Expression));
     }
 
     
