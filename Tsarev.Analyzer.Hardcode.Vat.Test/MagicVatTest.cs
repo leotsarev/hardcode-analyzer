@@ -1,14 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tsarev.Analyzer.TestHelpers;
+using Xunit;
 
 namespace Tsarev.Analyzer.Hardcode.Vat.Test
 {
-  [TestClass]
   public class MagicVatTest : DiagnosticVerifier
   {
-    [TestMethod]
+    [Fact]
     public void TestEmpty()
     {
       var test = @"";
@@ -16,7 +15,7 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetect18InCode()
     {
       var test = @"
@@ -35,7 +34,7 @@ namespace Tsarev.Analyzer.Hardcode.Vat.Test
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetectAttributeParam()
     {
       var test = @"
@@ -83,7 +82,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetectFloat18InCode()
     {
       var test = @"
@@ -102,7 +101,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetectDecimal18InCode()
     {
       var test = @"
@@ -121,7 +120,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "18.0"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetect118InCode()
     {
       var test = @"
@@ -140,7 +139,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "118"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetect82InCode()
     {
       var test = @"
@@ -159,7 +158,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(9, 27, "82"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetectFloat118InCode()
     {
       var test = @"
@@ -179,7 +178,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(10, 34, "1.18"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDetect82InConst()
     {
       var test = @"
@@ -195,7 +194,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test, ExpectVatHardcode(7, 36, "82"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestAllowInIndexer()
     {
       var test = @"
@@ -215,7 +214,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestAllowInIndexAttribute()
     {
       var test = @"
@@ -239,7 +238,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestAllowInSubstring()
     {
       var test = @"
@@ -259,7 +258,7 @@ public class ColumnAttribute : Attribute {
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestMigrationIgnored()
     {
       var test = @"

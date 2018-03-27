@@ -1,12 +1,13 @@
-﻿using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
+using Shouldly;
+using Xunit;
 
 namespace Tsarev.Analyzer.TestHelpers
 {
@@ -82,7 +83,7 @@ namespace Tsarev.Analyzer.TestHelpers
           document = document.WithSyntaxRoot(Formatter.Format(document.GetSyntaxRootAsync().Result, Formatter.Annotation, document.Project.Solution.Workspace));
           newCompilerDiagnostics = GetNewDiagnostics(compilerDiagnostics, GetCompilerDiagnostics(document));
 
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Fix introduced new compiler diagnostics:\r\n{string.Join("\r\n", newCompilerDiagnostics.Select(d => d.ToString()))}\r\n\r\nNew document:\r\n{document.GetSyntaxRootAsync().Result.ToFullString()}\r\n");
         }
 
@@ -95,7 +96,7 @@ namespace Tsarev.Analyzer.TestHelpers
 
       //after applying all of the code fixes, compare the resulting string to the inputted one
       var actual = GetStringFromDocument(document);
-      Assert.AreEqual(newSource, actual);
+      actual.ShouldBe(newSource);
     }
   }
 }

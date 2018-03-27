@@ -1,9 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Shouldly;
+using Xunit;
 
 namespace Tsarev.Analyzer.TestHelpers
 {
@@ -50,8 +51,7 @@ namespace Tsarev.Analyzer.TestHelpers
       if (expectedCount != actualCount)
       {
         var diagnosticsOutput = actualResults.Any() ? FormatDiagnostics(analyzer, actualResults.ToArray()) : "    NONE.";
-
-        Assert.IsTrue(false,
+        actualCount.ShouldBe(expectedCount, 
           $"Mismatch between number of diagnostics returned, expected \"{expectedCount}\" actual \"{actualCount}\"\r\n\r\nDiagnostics:\r\n{diagnosticsOutput}\r\n");
       }
 
@@ -62,11 +62,8 @@ namespace Tsarev.Analyzer.TestHelpers
 
         if (expected.Line == -1 && expected.Column == -1)
         {
-          if (actual.Location != Location.None)
-          {
-            Assert.IsTrue(false,
+          actual.Location.ShouldNotBe(Location.None,
               $"Expected:\nA project diagnostic with No location\nActual:\n{FormatDiagnostics(analyzer, actual)}");
-          }
         }
         else
         {
@@ -75,7 +72,7 @@ namespace Tsarev.Analyzer.TestHelpers
 
           if (additionalLocations.Length != expected.Locations.Length - 1)
           {
-            Assert.IsTrue(false,
+            Assert.True(false,
               $"Expected {expected.Locations.Length - 1} additional locations but got {additionalLocations.Length} for Diagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
           }
 
@@ -87,19 +84,19 @@ namespace Tsarev.Analyzer.TestHelpers
 
         if (actual.Id != expected.Id)
         {
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Expected diagnostic id to be \"{expected.Id}\" was \"{actual.Id}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
 
         if (actual.Severity != expected.Severity)
         {
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Expected diagnostic severity to be \"{expected.Severity}\" was \"{actual.Severity}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
 
         if (actual.GetMessage() != expected.Message)
         {
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Expected diagnostic message to be \"{expected.Message}\" was \"{actual.GetMessage()}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, actual)}\r\n");
         }
       }
@@ -116,7 +113,7 @@ namespace Tsarev.Analyzer.TestHelpers
     {
       var actualSpan = actual.GetLineSpan();
 
-      Assert.IsTrue(actualSpan.Path == expected.Path || (actualSpan.Path != null && actualSpan.Path.Contains("Test0.") && expected.Path.Contains("Test.")),
+      Assert.True(actualSpan.Path == expected.Path || (actualSpan.Path != null && actualSpan.Path.Contains("Test0.") && expected.Path.Contains("Test.")),
         $"Expected diagnostic to be in file \"{expected.Path}\" was actually in file \"{actualSpan.Path}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
 
       var actualLinePosition = actualSpan.StartLinePosition;
@@ -126,7 +123,7 @@ namespace Tsarev.Analyzer.TestHelpers
       {
         if (actualLinePosition.Line + 1 != expected.Line)
         {
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Expected diagnostic to be on line \"{expected.Line}\" was actually on line \"{actualLinePosition.Line + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
         }
       }
@@ -136,7 +133,7 @@ namespace Tsarev.Analyzer.TestHelpers
       {
         if (actualLinePosition.Character + 1 != expected.Column)
         {
-          Assert.IsTrue(false,
+          Assert.True(false,
             $"Expected diagnostic to start at column \"{expected.Column}\" was actually at column \"{actualLinePosition.Character + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
         }
       }
@@ -171,7 +168,7 @@ namespace Tsarev.Analyzer.TestHelpers
             }
             else
             {
-              Assert.IsTrue(location.IsInSource,
+              Assert.True(location.IsInSource,
                   $"Test base does not currently handle diagnostics in metadata locations. Diagnostic in metadata: {diagnostics[i]}\r\n");
 
               var resultMethodName = diagnostics[i].Location.SourceTree.FilePath.EndsWith(".cs") ? "GetCSharpResultAt" : "GetBasicResultAt";

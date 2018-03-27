@@ -1,16 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tsarev.Analyzer.TestHelpers;
+using Xunit;
 
 namespace Tsarev.Analyzer.Hardcode.Url.Test
 {
-  [TestClass]
   public class UnitTest : DiagnosticVerifier
   {
 
     //No diagnostics expected to show up
-    [TestMethod]
+    [Fact]
     public void TestEmpty()
     {
       var test = @"";
@@ -32,7 +31,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       };
 
     //Diagnostic triggered and checked for
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodeInLiteral()
     {
       var test = @"
@@ -51,7 +50,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
     }
 
     //Diagnostic triggered and checked for
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodeWithCapitalLetter()
     {
       var test = @"
@@ -69,7 +68,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test, ExpectUlrHardcode(8, 27, "hTTp://"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDefaultValueAttributeSupressed()
     {
       var test = @"
@@ -94,7 +93,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestDefaultValueAttributeSupressedShort()
     {
       var test = @"
@@ -118,7 +117,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestWebServiceBindingAttribute()
     {
       var test = @"
@@ -131,7 +130,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestXmlTypeAttribute()
     {
       var test = @"
@@ -144,7 +143,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestWebServiceAttribute()
     {
       var test = @"
@@ -157,7 +156,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSoapTypeAttributee()
     {
       var test = @"
@@ -170,7 +169,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestXmlArrayItemAttribute()
     {
       var test = @"
@@ -184,7 +183,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSoapRpcMethodAttributeAttribute()
     {
       var test = @"
@@ -199,7 +198,7 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestInterpolationString()
     {
       var test = @"

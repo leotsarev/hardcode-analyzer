@@ -1,14 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tsarev.Analyzer.TestHelpers;
+using Xunit;
 
 namespace Tsarev.Analyzer.Hardcode.Email.Test
 {
-  [TestClass]
   public class EmailHardcodeUnitTest : DiagnosticVerifier
   {
-    [TestMethod]
+    [Fact]
     public void TestEmpty()
     {
       var test = @"";
@@ -16,7 +15,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSimpleConstant()
     {
       var test = @"
@@ -34,7 +33,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test, ExpectHardcode(8, 27, "user@example.com") );
     }
 
-    [TestMethod]
+    [Fact]
     public void TestConstantConcatenation()
     {
       var test = @"
@@ -52,7 +51,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test, ExpectHardcode(8, 27, "<calculated string>"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestConstantConcatenationWithInterpolated()
     {
       var test = @"
@@ -70,7 +69,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test, ExpectHardcode(8, 27, "<calculated string>"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSqlParameter()
     {
       var test = @"
@@ -88,7 +87,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSqlParameterInArgument()
     {
       var test = @"
@@ -106,7 +105,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestXsltStringIgnored()
     {
       var test = @"
@@ -124,7 +123,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestSqlInString()
     {
       var test = @"
@@ -142,7 +141,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestInterpolationConstant()
     {
       var test = @"
@@ -160,7 +159,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test, ExpectHardcode(8, 29, "user@example.com"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestFormatStringIgnored()
     {
       var test = @"
@@ -178,8 +177,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [Ignore] //We like to support this case also, but we don't for now
-    [TestMethod]
+    [Fact(Skip = "We don't support this case yet")]
     public void TestFormatStringWithConstantAttrFound()
     {
       var test = @"
@@ -195,7 +193,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test, ExpectHardcode(8, 29, "user@example.com"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestNonConstantIgnored()
     {
       var test = @"
@@ -215,7 +213,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestNonConstantInterpolationIgnored()
     {
       var test = @"
@@ -236,7 +234,7 @@ namespace Tsarev.Analyzer.Hardcode.Email.Test
     }
 
 
-    [TestMethod, Ignore]
+    [Fact(Skip = "We don't support this case yet")]
     public void TestConstantInterpolation()
     {
       var test = @"

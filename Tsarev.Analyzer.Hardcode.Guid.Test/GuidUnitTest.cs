@@ -1,16 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tsarev.Analyzer.TestHelpers;
+using Xunit;
 
 namespace Tsarev.Analyzer.Hardcode.Guid.Test
 {
-  [TestClass]
   public class GuidUnitTest : DiagnosticVerifier
   {
 
     //No diagnostics expected to show up
-    [TestMethod]
+    [Fact]
     public void TestEmpty()
     {
       var test = @"";
@@ -19,7 +18,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
     }
 
     //Diagnostic triggered and checked for
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInCtor()
     {
       var test = @"
@@ -38,7 +37,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test, ExpectGuidHardcode(9, 27));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInParse()
     {
       var test = @"
@@ -57,7 +56,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test, ExpectGuidHardcode(9, 27));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInParseExact()
     {
       var test = @"
@@ -76,7 +75,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test, ExpectGuidHardcode(9, 27));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInTryParse() { 
       var test = @"
     using System;
@@ -95,7 +94,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test, ExpectGuidHardcode(10, 16));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInTryParseExact()
     {
       var test = @"
@@ -116,7 +115,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
     }
 
 
-    [TestMethod]
+    [Fact]
     public void TestExpectedHardcodedGuidInMember()
     {
       var test = @"
@@ -132,7 +131,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test, ExpectGuidHardcode(7, 49));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnoredInEntity()
     {
       var test = @"
@@ -150,7 +149,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnoredInSubclassOfEntity()
     {
       var test = @"
@@ -170,7 +169,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnoredVariable()
     {
       var test = @"
@@ -189,7 +188,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnoreConfigLoad()
     {
       var test = @"
@@ -200,7 +199,7 @@ namespace Tsarev.Analyzer.Hardcode.Guid.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestRobustForConstructorWithoutArguments()
     {
       var test = @"
