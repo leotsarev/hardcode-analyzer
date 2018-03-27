@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis;
