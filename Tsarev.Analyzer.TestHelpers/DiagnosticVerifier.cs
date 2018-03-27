@@ -131,11 +131,8 @@ namespace Tsarev.Analyzer.TestHelpers
       // Only check column position if there is an actual column position in the real diagnostic
       if (actualLinePosition.Character > 0)
       {
-        if (actualLinePosition.Character + 1 != expected.Column)
-        {
-          Assert.True(false,
-            $"Expected diagnostic to start at column \"{expected.Column}\" was actually at column \"{actualLinePosition.Character + 1}\"\r\n\r\nDiagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
-        }
+        (actualLinePosition.Character + 1).ShouldBe(expected.Column,
+          $"Diagnostic:\r\n    {FormatDiagnostics(analyzer, diagnostic)}\r\n");
       }
     }
     #endregion

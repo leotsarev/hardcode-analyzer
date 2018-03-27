@@ -122,14 +122,12 @@ namespace Tsarev.Analyzer.Web
     {
       if (!(syntax is InvocationExpressionSyntax invokeExpression)) return false;
 
-      var methodName = (invokeExpression.Expression as SimpleNameSyntax)?.Identifier.Text;
+      var methodName = invokeExpression.GetMethodName();
 
       var arguments = invokeExpression.ArgumentList.Arguments;
 
       return ResultMethodNames.Contains(methodName) &&
              arguments.All(argument => IsWebTrivialExpression(argument.Expression));
     }
-
-    
   }
 }
