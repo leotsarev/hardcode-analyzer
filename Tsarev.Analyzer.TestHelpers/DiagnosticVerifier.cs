@@ -46,13 +46,13 @@ namespace Tsarev.Analyzer.TestHelpers
     private static void VerifyDiagnosticResults(IReadOnlyList<Diagnostic> actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
     {
       var expectedCount = expectedResults.Length;
-      var actualCount = actualResults.Count;
+      var actualDiagnosticsCount = actualResults.Count;
 
-      if (expectedCount != actualCount)
+      if (expectedCount != actualDiagnosticsCount)
       {
         var diagnosticsOutput = actualResults.Any() ? FormatDiagnostics(analyzer, actualResults.ToArray()) : "    NONE.";
-        actualCount.ShouldBe(expectedCount, 
-          $"Mismatch between number of diagnostics returned, expected \"{expectedCount}\" actual \"{actualCount}\"\r\n\r\nDiagnostics:\r\n{diagnosticsOutput}\r\n");
+        actualDiagnosticsCount.ShouldBe(expectedCount, 
+          $"Diagnostics:\r\n{diagnosticsOutput}\r\n");
       }
 
       for (var i = 0; i < expectedResults.Length; i++)
