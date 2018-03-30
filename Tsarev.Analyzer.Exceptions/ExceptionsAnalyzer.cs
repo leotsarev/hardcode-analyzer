@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -21,13 +22,58 @@ namespace Tsarev.Analyzer.Exceptions
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule, StandartRules.FailedRule);
 
-    public override void Initialize(AnalysisContext context) => context.RegisterSafeSyntaxNodeAction(AnalyzeInvoke, SyntaxKind.InvocationExpression);
+    public override void Initialize(AnalysisContext context)
+    {
+      context.RegisterCompilationStartAction(compilationContext =>
+        {
+
+          INamedTypeSymbol interfaceType = compilationContext.Compilation.GetType<Exception>();
+          if (interfaceType == null)
+          {
+            return;
+          }
+
+          compilationContext.RegisterSyntaxNodeAction(
+            symbolContext => { AnalyzeInvoke(symbolContext, interfaceType); }, SyntaxKind.InvocationExpression);
+        }
+        );
+    }
 
     private static readonly ImmutableHashSet<string> LogMethodNames =
       new[] {"Error", "Warn", "Warning", "Info", "Information", "Debug", "Trace"}
         .ToImmutableHashSet();
 
-    private void AnalyzeInvoke(SyntaxNodeAnalysisContext context)
+    private class FindExceptionMessageVisitor : CSharpSyntaxWalker
+    {
+      public FindExceptionMessageVisitor(SyntaxNodeAnalysisContext context,
+        INamedTypeSymbol systemExceptionType)
+      {
+        Context = context;
+        SystemExceptionType = systemExceptionType;
+      }
+
+      public bool ExceptionMessagePresent { get; private set; } = false;
+      private SyntaxNodeAnalysisContext Context { get; }
+      private INamedTypeSymbol SystemExceptionType { get; }
+
+      public override void VisitMemberAccessExpression(MemberAccessExpressionSyntax member)
+      {
+        if (ExceptionMessagePresent)
+        {
+          return; // Skip
+        }
+
+        if (
+          member.Expression.IsExpressionOfTypeOrDerived(Context, SystemExceptionType) &&
+          member.Name.Identifier.Text == "Message")
+        {
+          ExceptionMessagePresent = true;
+        }
+      }
+    }
+
+    private static void AnalyzeInvoke(SyntaxNodeAnalysisContext context,
+      INamedTypeSymbol systemExceptionType)
     {
       if (!(context.Node is InvocationExpressionSyntax invocation))
       {
@@ -38,18 +84,40 @@ namespace Tsarev.Analyzer.Exceptions
 
       if (methodName != null && LogMethodNames.Contains(methodName))
       {
-        foreach (var argument in invocation.ArgumentList.Arguments)
+        if (IsExceptionMessagePassedToMethod(context, invocation, systemExceptionType) && !IsExceptionFullyPassedToMethod(context, invocation, systemExceptionType))
         {
-          if (argument.Expression is MemberAccessExpressionSyntax member)
-          {
-            var x = member.Name.Identifier.Text;
-            if (x == "Message")
-            {
-              context.ReportDiagnostic(Diagnostic.Create(Rule, member.GetLocation()));
-            }
-          }
+          context.ReportDiagnostic(Diagnostic.Create(Rule, invocation.GetLocation()));
         }
       }
+    }
+
+    private static bool IsExceptionFullyPassedToMethod(SyntaxNodeAnalysisContext context, InvocationExpressionSyntax invocationExpressionSyntax, INamedTypeSymbol systemExceptionType)
+    {
+      foreach (var argument in invocationExpressionSyntax.ArgumentList.Arguments)
+      {
+        if (argument.Expression.IsExpressionOfTypeOrDerived(context, systemExceptionType))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    private static bool IsExceptionMessagePassedToMethod(SyntaxNodeAnalysisContext context,
+      InvocationExpressionSyntax invocationExpressionSyntax, INamedTypeSymbol systemExceptionType)
+    {
+      foreach (var argument in invocationExpressionSyntax.ArgumentList.Arguments)
+      {
+        var analyzer = new FindExceptionMessageVisitor(context, systemExceptionType);
+        analyzer.Visit(argument.Expression);
+        if (analyzer.ExceptionMessagePresent)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 }

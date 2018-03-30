@@ -23,13 +23,64 @@ class Class {
 
   private void WriteException()
   {
-    var ex = new Exception();
+    var ex = new System.Exception();
     Log.Error(ex.Message);
   }
 }     
 ";
 
-      VerifyCSharpDiagnostic(test, Expect(7, 15));
+      VerifyCSharpDiagnostic(test, Expect(7, 5));
+    }
+
+    [Fact]
+    public void TestNotException()
+    {
+      var test = @"
+class Class {
+
+  private void WriteException()
+  {
+    var ex = new {Message = """"};
+    Log.Error(ex.Message);
+  }
+}     
+";
+
+      VerifyCSharpDiagnostic(test);
+    }
+
+    [Fact]
+    public void ConcatExceptionToLog()
+    {
+      var test = @"
+class Class {
+
+  private void WriteException()
+  {
+    var ex = new System.Exception();
+    Log.Error("""" + """" + ex.Message);
+  }
+}     
+";
+
+      VerifyCSharpDiagnostic(test, Expect(7, 5));
+    }
+
+    [Fact]
+    public void ExceptionPassedToLog()
+    {
+      var test = @"
+class Class {
+
+  private void WriteException()
+  {
+    var ex = new System.Exception();
+    Log.Error("""" + """" + ex.Message, ex);
+  }
+}     
+";
+
+      VerifyCSharpDiagnostic(test);
     }
 
     private DiagnosticResult Expect(int line, int column)
