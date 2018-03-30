@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
@@ -121,6 +121,31 @@ namespace Tsarev.Analyzer.Helpers
     public static bool IsArrayIndexArgument(this LiteralExpressionSyntax literal)
     {
       return literal.Parent is ArgumentSyntax && literal.Parent.Parent is BracketedArgumentListSyntax;
+    }
+
+    /// <summary>
+    /// Try to extract method name from invocation Expression 
+    /// </summary>
+    /// <param name="invocationExpressionSyntax"></param>
+    /// <returns></returns>
+    [CanBeNull]
+    public static string GetMethodName(this InvocationExpressionSyntax invocationExpressionSyntax)
+    {
+      switch (invocationExpressionSyntax.Expression)
+      {
+        case null:
+          return null;
+        case SimpleNameSyntax simple:
+          return simple.Identifier.Text;
+        case MemberAccessExpressionSyntax member:
+          return member.Name.Identifier.Text;
+        case QualifiedNameSyntax qualified:
+          return qualified.Right.Identifier.Text;
+        case AliasQualifiedNameSyntax alias:
+          return alias.Name.Identifier.Text;
+      }
+
+      return null;
     }
   }
 }

@@ -1,16 +1,14 @@
-using System.Runtime.InteropServices.ComTypes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Tsarev.Analyzer.TestHelpers;
+using Xunit;
 
 namespace Tsarev.Analyzer.Web.Test
 {
-  [TestClass]
   public class AsyncControllerAnalyzerTest : DiagnosticVerifier
   {
     //No diagnostics expected to show up
-    [TestMethod]
+    [Fact]
     public void TestEmpty()
     {
       var test = @"";
@@ -18,7 +16,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerByName()
     {
       var test = @"
@@ -36,7 +34,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 46, "FooController", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestExpression()
     {
       var test = @"
@@ -56,7 +54,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 46, "FooController", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerDescedant()
     {
       var test = @"
@@ -74,7 +72,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 46, "Foo", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerByNameCorrect()
     {
       var test = @"
@@ -92,7 +90,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerByNameValueTaskCorrect()
     {
       var test = @"
@@ -111,7 +109,7 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
 
-    [TestMethod]
+    [Fact]
     public void TestControllerPrivateCorrect()
     {
       var test = @"
@@ -129,7 +127,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestNoCrashGnericInAnalyzer()
     {
       var test = @"
@@ -148,7 +146,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(7, 34, "FooController", "GetUsers"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestNoCrashNotSimpleInAnalyzer()
     {
       var test = @"
@@ -167,7 +165,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(7, 34, "FooController", "GetUsers"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialViewCorrect()
     {
       var test = @"
@@ -185,7 +183,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialPatialViewCorrect()
     {
       var test = @"
@@ -204,7 +202,7 @@ namespace Tsarev.Analyzer.Web.Test
     }
 
 
-    [TestMethod]
+    [Fact]
     public void TestControllerInInterface()
     {
       var test = @"
@@ -218,7 +216,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestEmptyTrivialConst()
     {
       var test = @"
@@ -236,7 +234,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestEmptyTrivialVoid()
     {
       var test = @"
@@ -253,7 +251,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialWithArgumentCorrect()
     {
       var test = @"
@@ -271,7 +269,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestTrivialWithViewBagAssigment()
     {
       var test = @"
@@ -290,7 +288,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestNonTrivialWithViewBagAssigmentAndCall()
     {
       var test = @"
@@ -310,7 +308,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 31, "FooController", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnoreAbstractMethod()
     {
       var test = @"
@@ -326,7 +324,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestIgnorePrivateMethod()
     {
       var test = @"
@@ -344,7 +342,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestAnalyzeGenericClass()
     {
       var test = @"
@@ -359,7 +357,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialArrowCorrect()
     {
       var test = @"
@@ -375,7 +373,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialArrowWithArgumentCorrect()
     {
       var test = @"
@@ -391,7 +389,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerTrivialArrayCorrect()
     {
       var test = @"
@@ -410,7 +408,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerDisposeCorrect()
     {
       var test = @"
@@ -430,7 +428,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerNonTrivialWithCall()
     {
       var test = @"
@@ -450,7 +448,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 31, "FooController", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerNonTrivialWithCallArrow()
     {
       var test = @"
@@ -468,7 +466,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(6, 31, "FooController", "Method"));
     }
 
-    [TestMethod]
+    [Fact]
     public void TestControllerNonTrivialWithException()
     {
       var test = @"
@@ -489,8 +487,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test, ExpectAsyncWarning(3, 31, "FooController", "Method"));
     }
 
-    [TestMethod]
-    [Ignore] //need to understand that local variables actually constant
+    [Fact(Skip = "need to understand that local variables actually constant")]
     public void TestControllerTrivialWithPartialView()
     {
       var test = @"
@@ -506,8 +503,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
-    [Ignore] //need to understand that local variables actually constant
+    [Fact(Skip = "need to understand that local variables actually constant")]
     public void TestControllerTrivialWithFile()
     {
       var test = @"
@@ -522,8 +518,7 @@ namespace Tsarev.Analyzer.Web.Test
       VerifyCSharpDiagnostic(test);
     }
 
-    [TestMethod]
-    [Ignore] //need to understand that local variables actually constant
+    [Fact(Skip = "need to understand that local variables actually constant")]
     public void TestControllerTrivialWithTempData()
     {
       var test = @"
