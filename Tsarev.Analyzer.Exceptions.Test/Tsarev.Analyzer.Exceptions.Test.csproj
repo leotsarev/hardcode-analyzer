@@ -103,10 +103,6 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tsarev.Analyzer.Exceptions\Tsarev.Analyzer.Exceptions.csproj">
-      <Project>{0f926142-4eeb-4e12-805a-f0963ab2f6be}</Project>
-      <Name>Tsarev.Analyzer.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj">
       <Project>{7ef60ad1-739b-4f59-a4c9-df70be016461}</Project>
       <Name>Tsarev.Analyzer.TestHelpers</Name>
