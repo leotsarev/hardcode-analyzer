@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>Tsarev.Analyzer.Hardcode.Guid.Test</AssemblyTitle>
     <Company>Microsoft</Company>
     <Product>Tsarev.Analyzer.Hardcode.Guid.Test</Product>

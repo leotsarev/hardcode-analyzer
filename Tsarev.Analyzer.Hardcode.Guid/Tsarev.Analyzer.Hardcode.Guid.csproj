@@ -1,25 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>Tsarev.Analyzer.Hardcode.Guid</AssemblyTitle>
     <Company>Microsoft</Company>
-    <Product>Tsarev.Analyzer.Hardcode.Guid</Product>
     <Description>Url hardcode analyzer</Description>
-    <Copyright>© 2017, Leonid Tsarev</Copyright>
     <Version>1.0.*</Version>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <BuildDependsOn>$(BuildDependsOn);AfterBuildMigrated</BuildDependsOn>
     <Authors>leotsarev</Authors>
     <PackageId>Tsarev.Analyzer.Hardcode.Guid</PackageId>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/leotsarev/hardcode-analyzer</PackageProjectUrl>
     <PackageReleaseNotes>Initial version</PackageReleaseNotes>
     <PackageTags>Hardcode, analyzers, urls</PackageTags>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  
   <Target Name="AfterBuildMigrated" Condition="'$(Configuration)' == 'Release'">
     <!-- ILRepack -->
     <ItemGroup>

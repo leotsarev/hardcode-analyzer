@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    
     <ProductVersion>8.0.30703</ProductVersion>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>VatHardcodeAnalyzer.Test</AssemblyTitle>
     <Company>Microsoft</Company>
     <Product>VatHardcodeAnalyzer.Test</Product>

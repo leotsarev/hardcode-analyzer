@@ -1,17 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>AnalyzerHelpers</AssemblyTitle>
-    <Company>Microsoft</Company>
-    <Product>AnalyzerHelpers</Product>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Copyright>Copyright © Microsoft 2017</Copyright>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />

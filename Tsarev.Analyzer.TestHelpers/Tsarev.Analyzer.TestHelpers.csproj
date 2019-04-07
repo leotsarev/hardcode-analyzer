@@ -1,12 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>VatHardcodeAnalyzer.Test</AssemblyTitle>
-    <Company>Microsoft</Company>
-    <Product>VatHardcodeAnalyzer.Test</Product>
-    <Copyright>Copyright © Microsoft 2017</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.*" />
@@ -31,11 +26,5 @@
     <PackageReference Include="xunit.core" Version="2.3.1" />
     <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
 </Project>
