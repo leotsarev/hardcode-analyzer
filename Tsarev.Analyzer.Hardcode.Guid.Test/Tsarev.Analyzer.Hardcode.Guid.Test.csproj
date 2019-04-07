@@ -2,38 +2,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2</TargetFramework>
     <AssemblyTitle>Tsarev.Analyzer.Hardcode.Guid.Test</AssemblyTitle>
-    <Company>Microsoft</Company>
-    <Product>Tsarev.Analyzer.Hardcode.Guid.Test</Product>
-    <Copyright>Copyright © Microsoft 2017</Copyright>
+   
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.*" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.*" />
-    <PackageReference Include="System.Net.Http" Version="4.*" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="1.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="1.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="1.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="1.0.1" />
-    <PackageReference Include="Microsoft.Composition" Version="1.0.27" />
-    <PackageReference Include="System.Collections.Immutable" Version="1.1.36" />
-    <PackageReference Include="System.Reflection.Metadata" Version="1.0.21" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.abstractions" Version="2.0.1" />
-    <PackageReference Include="xunit.analyzers" Version="0.8.0" />
-    <PackageReference Include="xunit.assert" Version="2.3.1" />
-    <PackageReference Include="xunit.core" Version="2.3.1" />
-    <PackageReference Include="xunit.extensibility.core" Version="2.3.1" />
-    <PackageReference Include="xunit.extensibility.execution" Version="2.3.1" />
+    
+    
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.0.0" />
+    
+    
+    
+   
+    <PackageReference Include="xunit" Version="2.4.1" />
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tsarev.Analyzer.Hardcode.Guid\Tsarev.Analyzer.Hardcode.Guid.csproj" />
     <ProjectReference Include="..\Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
+
 </Project>

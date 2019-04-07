@@ -11,6 +11,7 @@
 
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <PackageProjectUrl>https://github.com/leotsarev/hardcode-analyzer</PackageProjectUrl>
 
     </PropertyGroup>
     <!--
