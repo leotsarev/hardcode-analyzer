@@ -3,36 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Url", "Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj", "{256757F2-DA1A-460B-B3B0-C412F7765C16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Url", "Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj", "{256757F2-DA1A-460B-B3B0-C412F7765C16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Url.Test", "UrlHardcodeAnalyzer.Test\Tsarev.Analyzer.Hardcode.Url.Test.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016460}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Url.Test", "UrlHardcodeAnalyzer.Test\Tsarev.Analyzer.Hardcode.Url.Test.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.TestHelpers", "Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.TestHelpers", "Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj", "{7EF60AD1-739B-4F59-A4C9-DF70BE016461}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Web", "Tsarev.Analyzer.Web\Tsarev.Analyzer.Web.csproj", "{14D5C137-73AD-4848-9C94-20340EAB466B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Web", "Tsarev.Analyzer.Web\Tsarev.Analyzer.Web.csproj", "{14D5C137-73AD-4848-9C94-20340EAB466B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Helpers", "Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj", "{C408D80B-8A40-4B31-B894-941039EB12D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Helpers", "Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj", "{C408D80B-8A40-4B31-B894-941039EB12D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Web.Test", "Tsarev.Analyzer.Web.Test\Tsarev.Analyzer.Web.Test.csproj", "{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Web.Test", "Tsarev.Analyzer.Web.Test\Tsarev.Analyzer.Web.Test.csproj", "{244E02C2-9DAA-4F34-AA5D-5EF305219ADB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{456FDA75-295D-4446-8A26-55066E46B24A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		appveyor.yml = appveyor.yml
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Guid", "Tsarev.Analyzer.Hardcode.Guid\Tsarev.Analyzer.Hardcode.Guid.csproj", "{F985F745-8C23-4268-AB4B-49895EA465C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Guid", "Tsarev.Analyzer.Hardcode.Guid\Tsarev.Analyzer.Hardcode.Guid.csproj", "{F985F745-8C23-4268-AB4B-49895EA465C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Guid.Test", "Tsarev.Analyzer.Hardcode.Guid.Test\Tsarev.Analyzer.Hardcode.Guid.Test.csproj", "{A9EDEBB1-8D09-43D3-B0DD-B7D78F405E85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Guid.Test", "Tsarev.Analyzer.Hardcode.Guid.Test\Tsarev.Analyzer.Hardcode.Guid.Test.csproj", "{A9EDEBB1-8D09-43D3-B0DD-B7D78F405E85}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A4C875FB-2038-438D-97CF-2953A2F89473}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hardcode", "Hardcode", "{06D9E499-7167-4C8F-A6EC-3A1390C0F79E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Email", "Tsarev.Analyzer.Hardcode.Email\Tsarev.Analyzer.Hardcode.Email.csproj", "{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Email", "Tsarev.Analyzer.Hardcode.Email\Tsarev.Analyzer.Hardcode.Email.csproj", "{F75815ED-B3B6-4A9B-B06E-9625B8F4D13A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsarev.Analyzer.Hardcode.Email.Test", "Tsarev.Analyzer.Hardcode.Email.Test\Tsarev.Analyzer.Hardcode.Email.Test.csproj", "{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsarev.Analyzer.Hardcode.Email.Test", "Tsarev.Analyzer.Hardcode.Email.Test\Tsarev.Analyzer.Hardcode.Email.Test.csproj", "{4E74A79F-74BC-49CF-9330-C1EAFCE07E42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

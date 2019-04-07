@@ -1,0 +1,18 @@
+<Project>
+  <ItemGroup  Condition="'$(IsPackable)' == 'true'">
+    <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="tools" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+<Target Name="IlRepack" AfterTargets="Build" Condition="'$(IsPackable)' == 'true'">
+    <ItemGroup>
+      <InputAssemblies Include="Tsarev.Analyzer.Helpers.dll" />
+    </ItemGroup>
+    <ILRepack
+      Parallel="true" Internalize="False" InputAssemblies="@(InputAssemblies)" OutputType="Dll"
+      MainAssembly="$(AssemblyName).dll"
+      OutputAssembly="$(OutputPath)\$(AssemblyName).dll"
+      WorkingDirectory="$(OutputPath)"
+      />
+    <Delete Files="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
+  </Target>
+</Project>

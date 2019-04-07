@@ -12,39 +12,20 @@
     <Version>0.1.0.0</Version>
     <AssemblyVersion>1.1.0</AssemblyVersion>
     <FileVersion>1.1.0</FileVersion>
-    <BuildDependsOn>$(BuildDependsOn);AfterBuildMigrated</BuildDependsOn>
-    <Authors>leotsarev</Authors>
     <PackageId>Tsarev.Analyzer.Web</PackageId>
     
     
     <PackageReleaseNotes>Initial version</PackageReleaseNotes>
     <PackageTags>analyzers, urls, asp.net mvc, asp.net webapi</PackageTags>
   </PropertyGroup>
-  
-  <Target Name="AfterBuildMigrated" Condition="'$(Configuration)' == 'Release'">
-    <!-- ILRepack -->
-    <ItemGroup>
-      <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
-      <InputAssemblies Include="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
-    </ItemGroup>
-    <ILRepack Parallel="true" Internalize="False" InputAssemblies="@(InputAssemblies)" TargetKind="Dll" OutputFile="$(OutputPath)\$(AssemblyName).dll" />
-    <Delete Files="$(OutputPath)\Tsarev.Analyzer.Helpers.dll" />
-    <!-- /ILRepack -->
-    <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">
-      <Output TaskParameter="Assemblies" ItemName="AnalyzerAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <Exec Command="&quot;$(SolutionDir)packages\NuGet.CommandLine.2.8.5\tools\NuGet.exe&quot; pack Tsarev.Analyzer.Web.nuspec -NoPackageAnalysis -Version %(AnalyzerAssemblyInfo.Version) -OutputDirectory ." WorkingDirectory="$(OutDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
-      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
-    </Exec>
-  </Target>
+
   <ItemGroup>
-    <PackageReference Include="ILRepack.MSBuild.Task" Version="1.0.9" />
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     
     
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.0.0" />
 
-    <PackageReference Include="NuGet.CommandLine" Version="2.8.5" />
+    
     
    
     
@@ -55,14 +36,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="tools\install.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="tools\uninstall.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tsarev.Analyzer.Helpers\Tsarev.Analyzer.Helpers.csproj" />
