@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyTitle>Tsarev.AsyncControllerAnalyzer.Test</AssemblyTitle>
     <Product>Tsarev.AsyncControllerAnalyzer.Test</Product>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
