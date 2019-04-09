@@ -1,0 +1,27 @@
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  solution: 'HardcodeAnalyzer.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration Release' 
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: 'src/**/*.Tests/*.csproj'
+arguments: '--configuration $(buildConfiguration) --logger:trx'
+
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+ - task: PublishBuildArtifacts@1
