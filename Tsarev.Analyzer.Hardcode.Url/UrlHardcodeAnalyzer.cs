@@ -65,12 +65,12 @@ namespace Tsarev.Analyzer.Hardcode.Url
 
       var value = context.Node.GetLiteralStringValueOrDefault();
       
-      if (CheckValue(WhiteList, value))
+      if (CheckStringValue(WhiteList, value))
       {
         return;
       }
 
-      if (CheckValue(BlackList, value))
+      if (CheckStringValue(BlackList, value))
       {
         context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
       }
@@ -83,7 +83,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
       return attribute != null && AttributeNameWhiteList.Contains(attribute.GetAttributeName());
     }
     
-    private static bool CheckValue(IEnumerable<string> list, string value)
+    private static bool CheckStringValue(IEnumerable<string> list, string value)
     {
       var comparer = CultureInfo.InvariantCulture.CompareInfo;
       return list.Any(part => comparer.IndexOf(value, part, CompareOptions.IgnoreCase) >= 0);
