@@ -1,27 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    
-   
-    <TargetFramework>netstandard2</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyTitle>VatHardcodeAnalyzer.Test</AssemblyTitle>
-    
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
-    
-    
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.0.0" />
-    
-    
-    
-   
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
-
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj" />
     <ProjectReference Include="..\Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj" />
   </ItemGroup>
-
 </Project>
