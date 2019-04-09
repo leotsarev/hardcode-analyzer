@@ -22,7 +22,7 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testRunner: VSTest
+    testRunner: xUnit
     testResultsFiles: '**/*.trx'
 
 - task: DotNetCoreCLI@2
