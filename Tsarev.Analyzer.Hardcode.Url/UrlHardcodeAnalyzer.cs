@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -34,6 +35,11 @@ namespace Tsarev.Analyzer.Hardcode.Url
     }
 
     private static readonly string[] BlackList = { "http:", "https:", "ftp:", "tcp:"};
+    
+    private static readonly string[] WhiteList =
+    {
+      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/"
+    };
 
     /// <summary>
     /// List of attributes that expected to contain URLs, and this is correct.
@@ -57,7 +63,17 @@ namespace Tsarev.Analyzer.Hardcode.Url
         return;
       }
 
-      CheckStringValue(context, context.Node.GetLiteralStringValueOrDefault());
+      var value = context.Node.GetLiteralStringValueOrDefault();
+      
+      if (CheckValue(WhiteList, value))
+      {
+        return;
+      }
+
+      if (CheckValue(BlackList, value))
+      {
+        context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
+      }
     }
 
     private static bool IsArgumentOfWhiteListedAttribute(SyntaxNode node)
@@ -66,14 +82,11 @@ namespace Tsarev.Analyzer.Hardcode.Url
       var attribute = argument?.WalkToAttribute();
       return attribute != null && AttributeNameWhiteList.Contains(attribute.GetAttributeName());
     }
-
-    private static void CheckStringValue(SyntaxNodeAnalysisContext context, string value)
+    
+    private static bool CheckValue(IEnumerable<string> list, string value)
     {
       var comparer = CultureInfo.InvariantCulture.CompareInfo;
-      if (BlackList.Any(part => comparer.IndexOf(value, part, CompareOptions.IgnoreCase) >= 0))
-      {
-        context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
-      }
+      return list.Any(part => comparer.IndexOf(value, part, CompareOptions.IgnoreCase) >= 0);
     }
   }
 }

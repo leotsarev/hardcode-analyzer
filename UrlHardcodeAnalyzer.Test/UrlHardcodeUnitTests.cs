@@ -213,7 +213,22 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
 
       VerifyCSharpDiagnostic(test, ExpectUlrHardcode(6, 25, "http://example.com"));
     }
+    
+    [Fact]
+    public void TestClaimsString()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"";
+        }
+      }
+    }";
 
+      VerifyCSharpDiagnostic(test);
+    }
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new UrlHardcodeAnalyzer();
   }
