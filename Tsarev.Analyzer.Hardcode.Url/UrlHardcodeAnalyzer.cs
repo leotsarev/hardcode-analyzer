@@ -38,7 +38,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
     
     private static readonly string[] WhiteList =
     {
-      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/"
+      "http://schemas.xmlsoap.org/"
     };
 
     /// <summary>
