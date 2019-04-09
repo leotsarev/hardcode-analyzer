@@ -17,12 +17,17 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: 'src/**/*.Tests/*.csproj'
+    projects: '**/*.Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --logger:trx'
 
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    projects: '**/*.csproj'
 
 - task: PublishBuildArtifacts@1
