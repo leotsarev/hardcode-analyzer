@@ -67,7 +67,7 @@ namespace Tsarev.Analyzer.Hardcode.Url
       
       foreach (var url in GetUrls(value))
       {
-        if (!WhiteList.Any(x => url.StartsWith(x)))
+        if (!WhiteList.Any(x => url.StartsWith(x, StringComparison.InvariantCultureIgnoreCase)))
         {
           context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
         }
