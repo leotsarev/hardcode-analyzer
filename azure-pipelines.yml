@@ -31,3 +31,7 @@ steps:
     projects: '**/*.csproj'
 
 - task: PublishBuildArtifacts@1
+
+trigger:
+- master
+- pr: master
