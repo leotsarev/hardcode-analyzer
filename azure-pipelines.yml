@@ -6,6 +6,13 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+trigger:
+- master
+- ci-upgrade
+
+pr: 
+- master
+
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
@@ -36,9 +43,3 @@ steps:
     projects: '**/*.csproj'
 
 - task: PublishBuildArtifacts@1
-
-trigger:
-- master
-
-pr: 
-- master
