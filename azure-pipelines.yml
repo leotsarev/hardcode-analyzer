@@ -41,6 +41,6 @@ steps:
   inputs:
     command: pack
     projects: '**/*.csproj' 
-    arguments: -Version $(GitVersion.NuGetVersionV2)
+    arguments: /p:Version=$(GitVersion.NuGetVersionV2)
 
 - task: PublishBuildArtifacts@1
