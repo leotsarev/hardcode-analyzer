@@ -40,6 +40,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: pack
-    projects: '**/*.csproj' -Version $(NuGetVersionV2)
+    projects: '**/*.csproj' 
+    arguments: -Version $(NuGetVersionV2)
 
 - task: PublishBuildArtifacts@1
