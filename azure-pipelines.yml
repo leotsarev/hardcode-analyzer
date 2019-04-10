@@ -24,15 +24,7 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: --configuration Release /property:Version=$(GitVersion.AssemblySemVer)
-
-- task: DotNetCoreCLI@2
-  displayName: Pack nugets
-  inputs:
-    command: custom
-    custom: pack
-    projects: '**/*.csproj' 
-    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build 
+    arguments: --configuration $(buildConfiguration) /property:Version=$(GitVersion.AssemblySemVer)
 
 - task: DotNetCoreCLI@2
   displayName: Test
@@ -43,7 +35,14 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testRunner: xUnit
     testResultsFiles: '**/*.trx'
+
+- task: DotNetCoreCLI@2
+  displayName: Pack nugets
+  inputs:
+    command: custom
+    custom: pack
+    projects: '**/*.csproj' 
+    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build --configuration $(buildConfiguration)
 
 - task: PublishBuildArtifacts@1
