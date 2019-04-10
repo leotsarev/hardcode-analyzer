@@ -27,6 +27,15 @@ steps:
     arguments: --configuration Release /property:Version=$(GitVersion.AssemblySemVer)
 
 - task: DotNetCoreCLI@2
+  displayName: Pack nugets
+  inputs:
+    command: pack
+    command: custom
+    custom: pack
+    projects: '**/*.csproj' 
+    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build 
+
+- task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
