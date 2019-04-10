@@ -34,4 +34,4 @@ steps:
 
 trigger:
 - master
-- pr: master
+  pr: master
