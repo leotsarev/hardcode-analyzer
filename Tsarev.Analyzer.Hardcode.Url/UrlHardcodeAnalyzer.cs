@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Linq;
-using System.Globalization;
 using Tsarev.Analyzer.Helpers;
 
 namespace Tsarev.Analyzer.Hardcode.Url
@@ -65,14 +65,12 @@ namespace Tsarev.Analyzer.Hardcode.Url
 
       var value = context.Node.GetLiteralStringValueOrDefault();
       
-      if (CheckStringValue(WhiteList, value))
+      foreach (var url in GetUrls(value))
       {
-        return;
-      }
-
-      if (CheckStringValue(BlackList, value))
-      {
-        context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
+        if (!WhiteList.Any(x => url.StartsWith(x)))
+        {
+          context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), value));
+        }
       }
     }
 
@@ -83,10 +81,49 @@ namespace Tsarev.Analyzer.Hardcode.Url
       return attribute != null && AttributeNameWhiteList.Contains(attribute.GetAttributeName());
     }
     
-    private static bool CheckStringValue(IEnumerable<string> list, string value)
+    private static IEnumerable<string> GetUrls(string value)
     {
-      var comparer = CultureInfo.InvariantCulture.CompareInfo;
-      return list.Any(part => comparer.IndexOf(value, part, CompareOptions.IgnoreCase) >= 0);
+      var entries = new List<string>();
+
+      var indicesOfEntries = GetIndicesOfEntries(value, BlackList).ToArray();
+      for (var index = 0; index < indicesOfEntries.Length - 1; index++)
+      {
+        var entryStart = indicesOfEntries[index];
+        var entryFinish = indicesOfEntries[index + 1];
+        var entryLength = entryFinish - entryStart;
+        var entry = value.Substring(entryStart, entryLength);
+        entries.Add(entry);
+      }
+      entries.Add(value.Substring(indicesOfEntries[indicesOfEntries.Length - 1]));
+            
+      return entries;
+    }
+
+    private static IEnumerable<int> GetIndicesOfEntries(string value, IReadOnlyCollection<string> entries)
+    {
+      var offset = 0;
+      int indexOfEntry;
+      while ((indexOfEntry = IndexOfSomeEntry(value, entries, ref offset)) != - 1)
+      {
+        yield return indexOfEntry;
+      }
+    }
+        
+    private static int IndexOfSomeEntry(string value, IEnumerable<string> entries, ref int offset)
+    {
+      var indexOfSomeEntry = -1;
+      var lengthOfSomeEntry = 0;
+      foreach (var entry in entries)
+      {       
+        var indexOfEntry = value.IndexOf(entry, offset, StringComparison.InvariantCultureIgnoreCase);
+        if (indexOfEntry >= 0 && (indexOfEntry < indexOfSomeEntry || indexOfSomeEntry == -1))
+        {
+          indexOfSomeEntry = indexOfEntry;
+          lengthOfSomeEntry = entry.Length;
+        }
+      }
+      offset = indexOfSomeEntry + lengthOfSomeEntry;
+      return indexOfSomeEntry;
     }
   }
 }
