@@ -24,7 +24,7 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '--configuration Release' 
+    arguments: '--configuration Release /property:Version=$(AssemblySemVer)' 
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -40,6 +40,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: pack
-    projects: '**/*.csproj'
+    projects: '**/*.csproj -Version $(NuGetVersionV2)'
 
 - task: PublishBuildArtifacts@1
