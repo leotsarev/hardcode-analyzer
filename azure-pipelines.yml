@@ -43,6 +43,6 @@ steps:
     command: custom
     custom: pack
     projects: '**/*.csproj' 
-    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build --configuration $(buildConfiguration)
+    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
