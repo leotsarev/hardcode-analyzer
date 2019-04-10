@@ -6,34 +6,39 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+trigger:
+- master
+- ci-upgrade
+
+pr: 
+- master
+
 steps:
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  inputs:
+    preferBundledVersion: true
+    
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '--configuration Release' 
+    arguments: --configuration $(buildConfiguration) /property:Version=$(GitVersion.AssemblySemVer)
 
 - task: DotNetCoreCLI@2
+  displayName: Test
   inputs:
     command: test
     projects: '**/*.Test/*.csproj'
     arguments: '--configuration $(buildConfiguration) --logger:trx'
 
-- task: PublishTestResults@2
-  inputs:
-    testRunner: xUnit
-    testResultsFiles: '**/*.trx'
-
 - task: DotNetCoreCLI@2
+  displayName: Pack nugets
   inputs:
-    command: pack
-    projects: '**/*.csproj'
+    command: custom
+    custom: pack
+    projects: '**/*.csproj' 
+    arguments: /p:Version=$(GitVersion.NuGetVersionV2) --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
-
-trigger:
-- master
-
-pr: 
-- master
