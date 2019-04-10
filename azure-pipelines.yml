@@ -33,10 +33,6 @@ steps:
     projects: '**/*.Test/*.csproj'
     arguments: '--configuration $(buildConfiguration) --logger:trx'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFiles: '**/*.trx'
-
 - task: DotNetCoreCLI@2
   displayName: Pack nugets
   inputs:
