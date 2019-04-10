@@ -1,3 +1,4 @@
+using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Tsarev.Analyzer.TestHelpers;
@@ -213,7 +214,72 @@ namespace Tsarev.Analyzer.Hardcode.Url.Test
 
       VerifyCSharpDiagnostic(test, ExpectUlrHardcode(6, 25, "http://example.com"));
     }
+    
+    [Fact]
+    public void TestClaimsString()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"";
+        }
+      }
+    }";
 
+      VerifyCSharpDiagnostic(test);
+    }
+    
+    [Fact]
+    public void TestTwoClaimsString()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"";
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test);
+    }
+    
+    [Fact]
+    public void TestMultiHostWithWhiteListStart()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""ftp://example.com http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"";
+        }
+      }
+    }";
+
+      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(6, 25, "ftp://example.com http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"));
+    }
+    
+    [Fact]
+    public void TestMultiHostWithWhiteListEnd()
+    {
+      var test = @"
+    namespace ConsoleApplication1
+    {
+        class TypeName {
+        public void Method() {
+           var test = $""http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier ftp://example.com"";
+        }
+      }
+    }";
+
+      var x = test.Split(new[] {"http://", "TCP://"}, StringSplitOptions.None);
+      
+      VerifyCSharpDiagnostic(test, ExpectUlrHardcode(6, 25, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier ftp://example.com"));
+    }
 
     protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new UrlHardcodeAnalyzer();
   }

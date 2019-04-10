@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyTitle>Tsarev.Analyzer.Hardcode.Guid.Test</AssemblyTitle>
-   
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
@@ -13,5 +13,4 @@
     <ProjectReference Include="..\Tsarev.Analyzer.Hardcode.Guid\Tsarev.Analyzer.Hardcode.Guid.csproj" />
     <ProjectReference Include="..\Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj" />
   </ItemGroup>
-
 </Project>

@@ -1,21 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    
-   
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyTitle>VatHardcodeAnalyzer.Test</AssemblyTitle>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tsarev.Analyzer.TestHelpers\Tsarev.Analyzer.TestHelpers.csproj" />
     <ProjectReference Include="..\Tsarev.Analyzer.Hardcode.Url\Tsarev.Analyzer.Hardcode.Url.csproj" />
   </ItemGroup>
-
 </Project>
