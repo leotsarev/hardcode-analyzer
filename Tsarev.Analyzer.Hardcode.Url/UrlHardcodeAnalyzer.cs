@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
@@ -38,7 +38,8 @@ namespace Tsarev.Analyzer.Hardcode.Url
     
     private static readonly string[] WhiteList =
     {
-      "http://schemas.xmlsoap.org/"
+      "http://schemas.xmlsoap.org/",
+      "http://localhost"
     };
 
     /// <summary>
